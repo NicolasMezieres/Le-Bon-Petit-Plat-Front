@@ -7,6 +7,7 @@ const commentary = "commentary/";
 
 export async function createCommentary(data: commentaryFormType) {
   const url = `${process.env.NEXT_PUBLIC_API_URL}${commentary}`;
+  axiosConfigWithToken.headers.Authorization = `Bearer ${window.localStorage.getItem("token")}`;
   return axios
     .post(url, data, axiosConfigWithToken)
     .then((res) => {
@@ -19,6 +20,7 @@ export async function createCommentary(data: commentaryFormType) {
 
 export async function getMyCommentaries() {
   const url = `${process.env.NEXT_PUBLIC_API_URL}${commentary}myCommentaries`;
+  axiosConfigWithToken.headers.Authorization = `Bearer ${window.localStorage.getItem("token")}`;
   return axios
     .get(url, axiosConfigWithToken)
     .then((res) => {
@@ -43,6 +45,7 @@ export async function getCommentariesByRecipe(id: string) {
 
 export async function updateCommentary(data: commentaryFormType, id: string) {
   const url = `${process.env.NEXT_PUBLIC_API_URL}${commentary}/${id}`;
+  axiosConfigWithToken.headers.Authorization = `Bearer ${window.localStorage.getItem("token")}`;
   return axios
     .patch(url, data, axiosConfigWithToken)
     .then((res) => {
@@ -55,6 +58,7 @@ export async function updateCommentary(data: commentaryFormType, id: string) {
 
 export async function deleteCommentary(id: string) {
   const url = `${process.env.NEXT_PUBLIC_API_URL}${commentary}/${id}`;
+  axiosConfigWithToken.headers.Authorization = `Bearer ${window.localStorage.getItem("token")}`;
   return axios
     .delete(url, axiosConfigWithToken)
     .then((res) => {

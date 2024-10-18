@@ -5,6 +5,7 @@ export type signUpFormType = {
   username: string;
   password: string;
   confirmPassword: string;
+  checkbox: boolean;
 };
 export type signUpType = {
   firstName: string;
@@ -16,7 +17,7 @@ export type signUpType = {
 export type signInFormType = {
   identifier: string;
   password: string;
-  isARobot: boolean;
+  // isARobot: boolean;
 };
 export type signInType = {
   identifier: string;

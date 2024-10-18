@@ -18,6 +18,7 @@ export async function getAllRecipe(page?: number) {
 }
 
 export async function myRecipes(page?: number) {
+  axiosConfigWithToken.headers.Authorization = `Bearer ${window.localStorage.getItem("token")}`;
   const url = `${process.env.NEXT_PUBLIC_API_URL}${recipe}user?page=${page}`;
   return axios
     .get(url, axiosConfigWithToken)
@@ -80,6 +81,7 @@ export async function findRecipeById(id: string) {
 }
 
 export async function createRecipe(data: recipeType) {
+  axiosConfigWithToken.headers.Authorization = `Bearer ${window.localStorage.getItem("token")}`;
   const url = `${process.env.NEXT_PUBLIC_API_URL}${recipe}`;
   return axios
     .post(url, data, axiosConfigWithToken)
@@ -92,6 +94,7 @@ export async function createRecipe(data: recipeType) {
 }
 
 export async function updateRecipe(data: recipeType, id: string) {
+  axiosConfigWithToken.headers.Authorization = `Bearer ${window.localStorage.getItem("token")}`;
   const url = `${process.env.NEXT_PUBLIC_API_URL}${recipe}${id}`;
   return axios
     .patch(url, data, axiosConfigWithToken)
@@ -104,6 +107,7 @@ export async function updateRecipe(data: recipeType, id: string) {
 }
 
 export async function deleteRecipe(id: string) {
+  axiosConfigWithToken.headers.Authorization = `Bearer ${window.localStorage.getItem("token")}`;
   const url = `${process.env.NEXT_PUBLIC_API_URL}${recipe}${id}`;
   return axios
     .delete(url, axiosConfigWithToken)

@@ -17,6 +17,9 @@ body {
 .orange {
   color: #de742e;
 }
+.borderOrange {
+  border-color: #de742e;
+}
 .bgImageDescription {
   background-image: url("../../public/background.png");
   opacity: 0.2;
@@ -24,6 +27,9 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
+}
+.bgBlue {
+  background-color: #2196f3;
 }
 @layer utilities {
   .text-balance {

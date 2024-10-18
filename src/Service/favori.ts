@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 const favori = "favori/";
 export async function getFavoris(page?: number) {
   const url = `${process.env.NEXT_PUBLIC_API_URL}${favori}?page=${page}`;
+  axiosConfigWithToken.headers.Authorization = `Bearer ${window.localStorage.getItem("token")}`;
   return axios
     .get(url, axiosConfigWithToken)
     .then((res) => {
@@ -16,6 +17,7 @@ export async function getFavoris(page?: number) {
 
 export async function toggleFavori(idRecipe: string) {
   const url = `${process.env.NEXT_PUBLIC_API_URL}${favori}`;
+  axiosConfigWithToken.headers.Authorization = `Bearer ${window.localStorage.getItem("token")}`;
   return axios
     .post(url, idRecipe, axiosConfigWithToken)
     .then((res) => {

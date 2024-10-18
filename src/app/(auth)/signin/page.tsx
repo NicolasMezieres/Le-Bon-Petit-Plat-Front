@@ -1,0 +1,89 @@
+"use client";
+import InputForm from "@/components/InputForm";
+import MainTitle from "@/components/MainTitle";
+import { Signin } from "@/Service/auth";
+import { signInFormType } from "@/utils/type";
+import { schemaSignin } from "@/validator/Signin";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { toast } from "react-toastify";
+import ReCAPTCHA from "react-google-recaptcha";
+
+const page = () => {
+  const { push } = useRouter();
+  const [validate, setValidate] = useState<string>();
+  function onChange(value: any) {
+    setValidate(value);
+  }
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<signInFormType>({
+    mode: "all",
+    resolver: yupResolver(schemaSignin),
+  });
+  const onSubmit: SubmitHandler<signInFormType> = async (data) => {
+    console.log(data, validate);
+    if (validate) {
+      Signin(data).then((res) => {
+        console.log(res);
+        if (res?.status === 201) {
+          toast.success(res.data.message);
+        }
+      });
+    }
+  };
+  //todo faire les redirections (signup aussi) quand on se connecte vers acceuil et signup et reset password
+  return (
+    <div className="flex justify-center items-center min-h-96 max-h-screen my-6  md:px-20 xl:px-80 xl:my-20">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="borderOrange border self-center rounded-[45px] w-80 flex gap-5 flex-col py-5 md:w-full "
+      >
+        <MainTitle text={"Connexion"} />
+        <InputForm
+          autoComplete="off"
+          addditionalCSSDiv="flex flex-col gap-2"
+          textLabel={"Identifiant"}
+          type={"text"}
+          placeholder={"Entrez votre Identifiant"}
+          register={register("identifier")}
+          errors={errors.identifier?.message}
+        />
+        <InputForm
+          addditionalCSSDiv="flex flex-col gap-2"
+          textLabel={"Mot de passe"}
+          type={"password"}
+          placeholder={"Entrez votre Mot de passe"}
+          register={register("password")}
+          errors={errors.password?.message}
+        />
+        <div className="self-center">
+          <ReCAPTCHA
+            sitekey={`${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`}
+            onChange={onChange}
+          />
+          {!validate && <p className="text-red-600 text-center">Veuillez valider le CAPTCHA.</p>}
+        </div>
+        <input
+          type="submit"
+          value={"Se connecter"}
+          className="w-64 h-9 bgBlue text-white self-center md:w-80 md:text-xl rounded-3xl drop-shadow-[0_2px_3px_#212121]"
+        />
+        <p className="text-center md:text-xl">
+          Vous n'êtes pas encore inscrit ?<br /> Cliquer
+          <a className="orange cursor-pointer" onClick={() => push("/signin")}>
+            {" ici"}
+          </a>
+        </p>
+        <p className="text-center">Mot de passe oublié</p>
+      </form>
+    </div>
+  );
+};
+
+export default page;

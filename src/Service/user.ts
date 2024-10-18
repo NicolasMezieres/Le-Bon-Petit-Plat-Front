@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { signUpType, updateUserByAdminType } from "@/utils/type";
 const user = "user/";
 export async function allUser(page?: number) {
+  axiosConfigWithToken.headers.Authorization = `Bearer ${window.localStorage.getItem("token")}`;
   const url = `${process.env.NEXT_PUBLIC_API_URL}${user}?page=${page}`;
   return axios
     .get(url, axiosConfigWithToken)
@@ -16,6 +17,7 @@ export async function allUser(page?: number) {
 }
 
 export async function updateUser(data: signUpType) {
+  axiosConfigWithToken.headers.Authorization = `Bearer ${window.localStorage.getItem("token")}`;
   const url = `${process.env.NEXT_PUBLIC_API_URL}${user}update`;
   return axios
     .patch(url, data, axiosConfigWithToken)
@@ -28,6 +30,7 @@ export async function updateUser(data: signUpType) {
 }
 
 export async function updateUserByAdmin(data: updateUserByAdminType, id: string) {
+  axiosConfigWithToken.headers.Authorization = `Bearer ${window.localStorage.getItem("token")}`;
   const url = `${process.env.NEXT_PUBLIC_API_URL}${user}update/${id}`;
   return axios
     .patch(url, data, axiosConfigWithToken)
@@ -40,6 +43,7 @@ export async function updateUserByAdmin(data: updateUserByAdminType, id: string)
 }
 
 export async function deleteUser(id: string) {
+  axiosConfigWithToken.headers.Authorization = `Bearer ${window.localStorage.getItem("token")}`;
   const url = `${process.env.NEXT_PUBLIC_API_URL}${user}${id}`;
   return axios
     .delete(url, axiosConfigWithToken)

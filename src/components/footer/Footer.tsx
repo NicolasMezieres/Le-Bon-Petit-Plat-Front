@@ -1,11 +1,19 @@
+"use client";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 const Footer = () => {
+  const { push } = useRouter();
   return (
-    <footer className="bg-[#d0d0d0] absolute bottom-0 w-screen z-10">
+    <footer className="bg-[#d0d0d0] w-screen z-50">
+      <div className="bg-[#d0d0d0] h-full absolute z-10"></div>
       <div className="flex justify-center gap-5 pt-5">
-        <p>Conditions générales</p>
-        <p>Mention légales</p>
+        <p className="cursor-pointer" onClick={() => push("/conditions")}>
+          Conditions générales
+        </p>
+        <p className="cursor-pointer" onClick={() => push("/conditions")}>
+          Mention légales
+        </p>
       </div>
       <p className="text-center py-5">© Copyright 2024</p>
     </footer>
