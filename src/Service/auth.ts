@@ -1,4 +1,4 @@
-import { signInType, signUpType } from "@/utils/type";
+import { resetPasswordType, signInType, signUpType } from "@/utils/type";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { axiosConfigWithToken } from "./category";
@@ -7,7 +7,7 @@ export const axiosConfig = {
   headers: {
     "Access-Control-Allow-Origin": "*",
     "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-    "content-type": "application/json;charset=utf-8",
+    "Content-Type": "application/json;charset=utf-8",
   },
 };
 export async function Signup(data: signUpType) {
@@ -53,7 +53,7 @@ export async function isUsedIdentifier(identifier: string) {
     });
 }
 
-export async function requestResetPassword(email: string) {
+export async function requestResetPassword(email: { email: string }) {
   const url = `${process.env.NEXT_PUBLIC_API_URL}${auth}requestResetPassword`;
   return axios
     .post(url, email, axiosConfig)
@@ -61,20 +61,26 @@ export async function requestResetPassword(email: string) {
       return res;
     })
     .catch((e) => {
+      console.log(e);
       toast.error(e.response.data.message);
     });
 }
 
-export async function resetPassword(password: string, token: string) {
+export async function resetPassword(password: resetPasswordType, token?: string) {
   const url = `${process.env.NEXT_PUBLIC_API_URL}${auth}resetPassword`;
-  axiosConfigWithToken.headers.Authorization = `Bearer ${window.localStorage.getItem("token")}`;
+  axiosConfigWithToken.headers.Authorization = `Bearer ${token}`;
+  console.log(axiosConfigWithToken);
   return axios
-    .post(url, password, axiosConfigWithToken)
+    .patch(url, password, axiosConfigWithToken)
     .then((res) => {
       return res;
     })
     .catch((e) => {
-      toast.error(e.response.data.message);
+      if (e.status === 401 && e.response.data.message === "Unauthorized") {
+        toast.error("Jeton expiré");
+      } else {
+        toast.error(e.response.data.message);
+      }
     });
 }
 

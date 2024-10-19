@@ -23,6 +23,7 @@ export type signInType = {
   identifier: string;
   password: string;
 };
+export type resetPasswordType = { password: string; confirmPassword: string };
 
 export type commentaryFormType = {
   idRecipe: string;

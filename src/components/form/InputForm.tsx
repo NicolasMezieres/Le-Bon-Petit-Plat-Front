@@ -22,7 +22,7 @@ const InputForm = ({
   additionalCSSInput?: string;
   autoComplete?: string;
   defaultValue?: string;
-  register: {};
+  register?: {};
   errors?: string;
 }) => {
   return (

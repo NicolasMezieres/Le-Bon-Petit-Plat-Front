@@ -1,13 +1,12 @@
 "use client";
-import type { Metadata } from "next";
 import "../globals.css";
-import HeaderAuth from "@/components/header/HeaderAuth";
 import Footer from "@/components/footer/Footer";
 import { Bounce, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ContextLoading } from "@/context/context";
 import { useEffect, useState } from "react";
 import FoodLoader from "@/components/loader/FoodLoader";
+import Header from "@/components/header/Header";
 
 // export const metadata: Metadata = {
 //   title: "Le Bon Petit Plat",
@@ -53,7 +52,7 @@ export default function RootLayout({
               theme="light"
               transition={Bounce}
             />
-            <HeaderAuth />
+            <Header />
             {isLoading && <FoodLoader />}
             <ContextLoading.Provider value={{ isLoading, setIsLoading }}>
               {children}

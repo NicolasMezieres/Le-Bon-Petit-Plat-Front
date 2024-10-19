@@ -1,16 +1,23 @@
 "use client";
-import InputForm from "@/components/InputForm";
+import InputForm from "@/components/form/InputForm";
+import InputSubmit from "@/components/form/InputSubmit";
+import FoodLoader from "@/components/loader/FoodLoader";
 import MainTitle from "@/components/MainTitle";
+import { ContextLoading } from "@/context/context";
 import { Signup } from "@/Service/auth";
 import { signUpFormType } from "@/utils/type";
 import { schemaSignup } from "@/validator/Signup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
 const page = () => {
+  const { setIsLoading } = useContext(ContextLoading);
+  useEffect(() => {
+    setIsLoading(false);
+  }, []);
   const { push } = useRouter();
   const {
     register,
@@ -25,6 +32,8 @@ const page = () => {
     Signup(data).then((res) => {
       if (res?.status === 201) {
         toast.success(res.data);
+        setIsLoading(true);
+        push("/signin");
       }
     });
   };
@@ -92,11 +101,7 @@ const page = () => {
           </div>
           {errors.checkbox && <p className="text-red-600 text-center">{errors.checkbox.message}</p>}
         </div>
-        <input
-          type="submit"
-          value={"S'inscrire"}
-          className="w-64 h-9 bgBlue text-white self-center md:w-80 md:text-xl rounded-3xl drop-shadow-[0_2px_3px_#212121]"
-        />
+        <InputSubmit value={"S'inscrire"} />
         <p className="text-center md:text-xl">
           Vous êtes déjà inscrit ? Cliquer{" "}
           <a className="orange cursor-pointer" onClick={() => push("/signin")}>

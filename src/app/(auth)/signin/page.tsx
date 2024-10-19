@@ -1,17 +1,24 @@
 "use client";
-import InputForm from "@/components/InputForm";
+import InputForm from "@/components/form/InputForm";
 import MainTitle from "@/components/MainTitle";
 import { Signin } from "@/Service/auth";
 import { signInFormType } from "@/utils/type";
 import { schemaSignin } from "@/validator/Signin";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import ReCAPTCHA from "react-google-recaptcha";
+import InputSubmit from "@/components/form/InputSubmit";
+import ResetPassword from "@/components/modal/ResetPassword";
+import { ContextLoading } from "@/context/context";
 
 const page = () => {
+  const { setIsLoading } = useContext(ContextLoading);
+  useEffect(() => {
+    setIsLoading(false);
+  }, []);
   const { push } = useRouter();
   const [validate, setValidate] = useState<string>();
   function onChange(value: any) {
@@ -27,17 +34,17 @@ const page = () => {
     resolver: yupResolver(schemaSignin),
   });
   const onSubmit: SubmitHandler<signInFormType> = async (data) => {
-    console.log(data, validate);
     if (validate) {
       Signin(data).then((res) => {
-        console.log(res);
         if (res?.status === 201) {
           toast.success(res.data.message);
+          localStorage.setItem("token", res.data.access_token);
+          setIsLoading(true);
+          push("/accueil");
         }
       });
     }
   };
-  //todo faire les redirections (signup aussi) quand on se connecte vers acceuil et signup et reset password
   return (
     <div className="flex justify-center items-center min-h-96 max-h-screen my-6  md:px-20 xl:px-80 xl:my-20">
       <form
@@ -69,18 +76,14 @@ const page = () => {
           />
           {!validate && <p className="text-red-600 text-center">Veuillez valider le CAPTCHA.</p>}
         </div>
-        <input
-          type="submit"
-          value={"Se connecter"}
-          className="w-64 h-9 bgBlue text-white self-center md:w-80 md:text-xl rounded-3xl drop-shadow-[0_2px_3px_#212121]"
-        />
+        <InputSubmit value={"Se connecter"} />
         <p className="text-center md:text-xl">
           Vous n'êtes pas encore inscrit ?<br /> Cliquer
-          <a className="orange cursor-pointer" onClick={() => push("/signin")}>
+          <a className="orange cursor-pointer" onClick={() => push("/signup")}>
             {" ici"}
           </a>
         </p>
-        <p className="text-center">Mot de passe oublié</p>
+        <ResetPassword />
       </form>
     </div>
   );
