@@ -46,7 +46,7 @@ const page = () => {
     }
   };
   return (
-    <div className="flex justify-center items-center min-h-96 max-h-screen my-6  md:px-20 xl:px-80 xl:my-20">
+    <main className="grow flex justify-center items-center min-h-96 max-h-screen my-6  md:px-20 xl:px-80 xl:my-20">
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="borderOrange border self-center rounded-[45px] w-80 flex gap-5 flex-col py-5 md:w-full "
@@ -85,7 +85,7 @@ const page = () => {
         </p>
         <ResetPassword />
       </form>
-    </div>
+    </main>
   );
 };
 

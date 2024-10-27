@@ -1,7 +1,7 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 
-export async function uploadImage() {
+export async function uploadImage(file: FileList) {
   const url = `${process.env.NEXT_PUBLIC_API_URL}image`;
   const axiosConfig = {
     headers: {
@@ -11,8 +11,10 @@ export async function uploadImage() {
       Authorization: `Bearer ${window.localStorage.getItem("token")}`,
     },
   };
+  const formdata = new FormData();
+  formdata.append("image", file[0]);
   return axios
-    .post(url, axiosConfig)
+    .post(url, formdata, axiosConfig)
     .then((res) => {
       return res;
     })

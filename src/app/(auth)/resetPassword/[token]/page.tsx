@@ -39,6 +39,8 @@ const page = ({ params }: { params: params }) => {
         toast.success(res.data.message);
         setIsLoading(true);
         push("/signin");
+      } else if (res?.status === 401) {
+        push("/signin");
       }
     });
   };

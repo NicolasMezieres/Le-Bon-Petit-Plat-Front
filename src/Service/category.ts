@@ -19,7 +19,12 @@ export async function getAllCategories() {
       return res;
     })
     .catch((e) => {
-      toast.error(e.response.data.message);
+      if (e.status === 401 && e.response.data.message === "Unauthorized") {
+        toast.error("Vous n'êtes pas autorisé");
+        return e;
+      } else {
+        toast.error(e.response.data.message);
+      }
     });
 }
 
@@ -32,7 +37,12 @@ export async function createCategory(name: string) {
       return res;
     })
     .catch((e) => {
-      toast.error(e.response.data.message);
+      if (e.status === 401 && e.response.data.message === "Unauthorized") {
+        toast.error("Vous n'êtes pas autorisé");
+        return e;
+      } else {
+        toast.error(e.response.data.message);
+      }
     });
 }
 
@@ -45,7 +55,12 @@ export async function updateCategory(name: string, id: string) {
       return res;
     })
     .catch((e) => {
-      toast.error(e.response.data.message);
+      if (e.status === 401 && e.response.data.message === "Unauthorized") {
+        toast.error("Vous n'êtes pas autorisé");
+        return e;
+      } else {
+        toast.error(e.response.data.message);
+      }
     });
 }
 
@@ -58,6 +73,11 @@ export async function deleteCategory(id: string) {
       return res;
     })
     .catch((e) => {
-      toast.error(e.response.data.message);
+      if (e.status === 401 && e.response.data.message === "Unauthorized") {
+        toast.error("Vous n'êtes pas autorisé");
+        return e;
+      } else {
+        toast.error(e.response.data.message);
+      }
     });
 }

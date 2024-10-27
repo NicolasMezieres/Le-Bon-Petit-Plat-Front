@@ -22,5 +22,5 @@ export const schemaSignup = yup.object({
   checkbox: yup
     .boolean()
     .oneOf([true], "Accepter les termes et les conditions")
-    .required("Ce hamp est requis"),
+    .required("Ce champ est requis"),
 });

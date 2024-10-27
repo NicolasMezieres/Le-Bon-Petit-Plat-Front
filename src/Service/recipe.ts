@@ -26,7 +26,12 @@ export async function myRecipes(page?: number) {
       return res;
     })
     .catch((e) => {
-      toast.error(e.response.data.message);
+      if (e.status === 401 && e.response.data.message === "Unauthorized") {
+        toast.error("Vous n'êtes pas autorisé");
+        return e;
+      } else {
+        toast.error(e.response.data.message);
+      }
     });
 }
 
@@ -53,11 +58,11 @@ export async function mostRecent() {
       toast.error(e.response.data.message);
     });
 }
-
-export async function search(idCategory: string, search: string, page?: number) {
-  const url = `${process.env.NEXT_PUBLIC_API_URL}${recipe}search?idCategory=${idCategory}&search=${
-    search ? search : ""
-  }&page=${page ? page : ""}`;
+//todo regler le problème si nameCategory = undefined
+export async function search(nameCategory?: string, search?: string, page?: number, note?: number) {
+  const url = `${process.env.NEXT_PUBLIC_API_URL}${recipe}search?nameCategory=${
+    nameCategory ? nameCategory : ""
+  }&search=${search ? search : ""}&page=${page ? page : ""}&note=${note ? note : ""}`;
   return axios
     .get(url, axiosConfig)
     .then((res) => {
@@ -65,6 +70,26 @@ export async function search(idCategory: string, search: string, page?: number) 
     })
     .catch((e) => {
       toast.error(e.response.data.message);
+      return e;
+    });
+}
+export async function searchMyRecipes(
+  idCategory?: string,
+  search?: string,
+  page?: number,
+  note?: number
+) {
+  const url = `${process.env.NEXT_PUBLIC_API_URL}${recipe}searchMyRecipes?nameCategory=${
+    idCategory ? idCategory : ""
+  }&search=${search ? search : ""}&page=${page ? page : ""}&note=${note ? note : ""}`;
+  return axios
+    .get(url, axiosConfigWithToken)
+    .then((res) => {
+      return res;
+    })
+    .catch((e) => {
+      toast.error(e.response.data.message);
+      return e;
     });
 }
 
@@ -77,6 +102,7 @@ export async function findRecipeById(id: string) {
     })
     .catch((e) => {
       toast.error(e.response.data.message);
+      return e;
     });
 }
 
@@ -89,7 +115,13 @@ export async function createRecipe(data: recipeType) {
       return res;
     })
     .catch((e) => {
-      toast.error(e.response.data.message);
+      if (e.status === 401 && e.response.data.message === "Unauthorized") {
+        toast.error("Vous n'êtes pas autorisé");
+        return e;
+      } else {
+        toast.error(e.response.data.message);
+        return e;
+      }
     });
 }
 
@@ -102,7 +134,13 @@ export async function updateRecipe(data: recipeType, id: string) {
       return res;
     })
     .catch((e) => {
-      toast.error(e.response.data.message);
+      if (e.status === 401 && e.response.data.message === "Unauthorized") {
+        toast.error("Vous n'êtes pas autorisé");
+        return e;
+      } else {
+        toast.error(e.response.data.message);
+        return e;
+      }
     });
 }
 
@@ -115,6 +153,12 @@ export async function deleteRecipe(id: string) {
       return res;
     })
     .catch((e) => {
-      toast.error(e.response.data.message);
+      if (e.status === 401 && e.response.data.message === "Unauthorized") {
+        toast.error("Vous n'êtes pas autorisé");
+        return e;
+      } else {
+        toast.error(e.response.data.message);
+        return e;
+      }
     });
 }

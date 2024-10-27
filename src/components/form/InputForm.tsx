@@ -1,7 +1,4 @@
-import { signUpFormType } from "@/utils/type";
-import { register } from "module";
 import React from "react";
-import { FieldErrors, UseFormRegister } from "react-hook-form";
 const InputForm = ({
   addditionalCSSDiv,
   textLabel,
@@ -13,6 +10,7 @@ const InputForm = ({
   errors,
   autoComplete,
   defaultValue,
+  sizeInput,
 }: {
   addditionalCSSDiv?: string;
   textLabel: string;
@@ -21,9 +19,10 @@ const InputForm = ({
   placeholder: string;
   additionalCSSInput?: string;
   autoComplete?: string;
-  defaultValue?: string;
+  defaultValue?: string | null;
   register?: {};
   errors?: string;
+  sizeInput?: string;
 }) => {
   return (
     <div className={addditionalCSSDiv}>
@@ -39,7 +38,9 @@ const InputForm = ({
         id={textLabel}
         type={type}
         placeholder={placeholder}
-        className={`w-64 self-center md:text-xl md:w-80 text-center rounded-3xl ${additionalCSSInput}`}
+        className={` self-center ${
+          sizeInput ? sizeInput : "md:text-xl md:w-80"
+        } text-center rounded-3xl ${additionalCSSInput ? additionalCSSInput : "w-64"}`}
         {...register}
       />
 

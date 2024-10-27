@@ -14,7 +14,12 @@ export async function createCommentary(data: commentaryFormType) {
       return res;
     })
     .catch((e) => {
-      toast.error(e.response.data.message);
+      if (e.status === 401 && e.response.data.message === "Unauthorized") {
+        toast.error("Vous n'êtes pas autorisé");
+        return e;
+      } else {
+        toast.error(e.response.data.message);
+      }
     });
 }
 
@@ -27,7 +32,12 @@ export async function getMyCommentaries() {
       return res;
     })
     .catch((e) => {
-      toast.error(e.response.data.message);
+      if (e.status === 401 && e.response.data.message === "Unauthorized") {
+        toast.error("Vous n'êtes pas autorisé");
+        return e;
+      } else {
+        toast.error(e.response.data.message);
+      }
     });
 }
 
@@ -52,7 +62,12 @@ export async function updateCommentary(data: commentaryFormType, id: string) {
       return res;
     })
     .catch((e) => {
-      toast.error(e.response.data.message);
+      if (e.status === 401 && e.response.data.message === "Unauthorized") {
+        toast.error("Vous n'êtes pas autorisé");
+        return e;
+      } else {
+        toast.error(e.response.data.message);
+      }
     });
 }
 
@@ -65,6 +80,11 @@ export async function deleteCommentary(id: string) {
       return res;
     })
     .catch((e) => {
-      toast.error(e.response.data.message);
+      if (e.status === 401 && e.response.data.message === "Unauthorized") {
+        toast.error("Vous n'êtes pas autorisé");
+        return e;
+      } else {
+        toast.error(e.response.data.message);
+      }
     });
 }

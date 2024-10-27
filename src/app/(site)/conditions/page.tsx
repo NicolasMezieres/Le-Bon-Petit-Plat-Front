@@ -10,7 +10,7 @@ const page = () => {
     setIsLoading(false);
   }, []);
   return (
-    <div className="py-10 px-6 md:px-20 w-full flex flex-col items-center gap-5">
+    <main className="py-10 px-6 md:px-20 w-full flex flex-col items-center gap-5 font-['Lato']">
       <div className="flex flex-col justify-center items-center gap-5 xl:w-[640px] ">
         <div className="flex flex-col gap-2.5">
           <SecondTitle additionalCSS="orange" text={"Mentions légales"} />
@@ -177,7 +177,7 @@ const page = () => {
           </p>
         </div>
       </div>
-    </div>
+    </main>
   );
 };
 

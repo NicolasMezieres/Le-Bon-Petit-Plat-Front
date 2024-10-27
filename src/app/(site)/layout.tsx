@@ -7,6 +7,8 @@ import { ContextLoading } from "@/context/context";
 import { useEffect, useState } from "react";
 import FoodLoader from "@/components/loader/FoodLoader";
 import Header from "@/components/header/Header";
+import { jwtDecode } from "jwt-decode";
+import { tokenType } from "@/utils/type";
 
 // export const metadata: Metadata = {
 //   title: "Le Bon Petit Plat",
@@ -20,16 +22,24 @@ export default function RootLayout({
 }>) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isLoad, setIsLoad] = useState<boolean>(true);
+  const [tokenInfo, setTokenInfo] = useState<tokenType>();
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoad(false);
-    }, 500);
-
-    return () => clearTimeout(timer);
+    const token = window.localStorage.getItem("token");
+    if (token) {
+      try {
+        const jwt: tokenType = jwtDecode(token);
+        setTokenInfo(jwt);
+      } catch (error) {}
+    }
+    setIsLoad(false);
   }, []);
   return (
     <html lang="fr">
       <head>
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
+        />
         <script src="https://www.google.com/recaptcha/api.js?hl=fr" async defer></script>
       </head>
       <body className="font-['Lato']">
@@ -52,9 +62,13 @@ export default function RootLayout({
               theme="light"
               transition={Bounce}
             />
-            <Header />
-            {isLoading && <FoodLoader />}
-            <ContextLoading.Provider value={{ isLoading, setIsLoading }}>
+            <ContextLoading.Provider value={{ isLoading, setIsLoading, tokenInfo, setTokenInfo }}>
+              <Header />
+              {isLoading && (
+                <div className="fixed top-20 md:top-40">
+                  <FoodLoader />
+                </div>
+              )}
               {children}
             </ContextLoading.Provider>
             <Footer />

@@ -1,7 +1,9 @@
+"use client";
 import { resetPasswordType, signInType, signUpType } from "@/utils/type";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { axiosConfigWithToken } from "./category";
+import { useRouter } from "next/navigation";
 const auth = "auth/";
 export const axiosConfig = {
   headers: {
@@ -18,7 +20,6 @@ export async function Signup(data: signUpType) {
       return res;
     })
     .catch((e) => {
-      console.log(e);
       if (e.status === 400) {
         toast.error(e.response.data.message[0]);
       } else {
@@ -78,6 +79,7 @@ export async function resetPassword(password: resetPasswordType, token?: string)
     .catch((e) => {
       if (e.status === 401 && e.response.data.message === "Unauthorized") {
         toast.error("Jeton expiré");
+        return e;
       } else {
         toast.error(e.response.data.message);
       }

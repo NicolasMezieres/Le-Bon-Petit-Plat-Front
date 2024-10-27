@@ -38,7 +38,7 @@ const page = () => {
     });
   };
   return (
-    <div className="flex justify-center my-6 md:px-20 xl:px-80 xl:my-20">
+    <div className="flex grow justify-center my-6 md:px-20 xl:px-80 xl:my-20">
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="borderOrange border rounded-[45px] w-80  flex gap-5 flex-col py-5 md:w-full "

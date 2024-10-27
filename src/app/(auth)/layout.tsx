@@ -33,7 +33,7 @@ export default function RootLayout({
       <head>
         <script src="https://www.google.com/recaptcha/api.js?hl=fr" async defer></script>
       </head>
-      <body className="font-['Lato']">
+      <body>
         {isLoad ? (
           <div className="fixed top-20 right-20">
             <FoodLoader />
