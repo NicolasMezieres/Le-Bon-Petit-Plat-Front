@@ -14,7 +14,7 @@ import InputSubmit from "@/components/form/InputSubmit";
 import ResetPassword from "@/components/modal/ResetPassword";
 import { ContextLoading } from "@/context/context";
 
-const page = () => {
+const Page = () => {
   const { setIsLoading } = useContext(ContextLoading);
   useEffect(() => {
     setIsLoading(false);
@@ -27,7 +27,6 @@ const page = () => {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm<signInFormType>({
     mode: "all",
@@ -89,4 +88,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

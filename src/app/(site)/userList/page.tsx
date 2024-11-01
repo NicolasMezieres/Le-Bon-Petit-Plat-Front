@@ -11,7 +11,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { FaArrowRight } from "react-icons/fa";
 import { toast } from "react-toastify";
 
-const page = () => {
+const Page = () => {
   const { push } = useRouter();
   const { setIsLoading, isLoading } = useContext(ContextLoading);
   const [search, setSearch] = useState<string>();
@@ -135,4 +135,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

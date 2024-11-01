@@ -23,7 +23,7 @@ import { IoClose } from "react-icons/io5";
 import { LuIceCream2, LuSalad } from "react-icons/lu";
 import { toast } from "react-toastify";
 
-const page = () => {
+const Page = () => {
   const { push } = useRouter();
   const { setIsLoading } = useContext(ContextLoading);
   const [image, setImage] = useState<string>();
@@ -361,4 +361,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

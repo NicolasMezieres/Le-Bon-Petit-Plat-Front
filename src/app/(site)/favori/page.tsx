@@ -12,7 +12,7 @@ import { lookRecipeType } from "@/utils/type";
 import { useRouter } from "next/navigation";
 import React, { useContext, useEffect, useState } from "react";
 
-const page = () => {
+const Page = () => {
   const { push } = useRouter();
   const { isLoading, setIsLoading } = useContext(ContextLoading);
   const [search, setSearch] = useState<string>();
@@ -70,4 +70,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

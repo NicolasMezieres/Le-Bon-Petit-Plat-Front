@@ -15,7 +15,7 @@ import { FaRegHeart } from "react-icons/fa6";
 import { MdDelete, MdOutlineAccessTime } from "react-icons/md";
 import { PiChefHat, PiKeyReturn } from "react-icons/pi";
 
-const page = ({ params }: { params: { id: string } }) => {
+const Page = ({ params }: { params: { id: string } }) => {
   const { setIsLoading, isLoading, tokenInfo, setTokenInfo } = useContext(ContextLoading);
   const [commentaryList, setCommentaryList] = useState<commentaryType[]>([]);
   const [recipeInfo, setRecipeInfo] = useState<lookRecipeType>();
@@ -237,4 +237,4 @@ const page = ({ params }: { params: { id: string } }) => {
     );
 };
 
-export default page;
+export default Page;

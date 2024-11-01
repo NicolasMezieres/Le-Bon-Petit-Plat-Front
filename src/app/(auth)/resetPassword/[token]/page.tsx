@@ -27,7 +27,6 @@ const Page = ({ params }: { params: params }) => {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm<resetPasswordType>({
     mode: "all",

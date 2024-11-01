@@ -13,7 +13,7 @@ import { lookRecipeType } from "@/utils/type";
 import { useRouter } from "next/navigation";
 import React, { useContext, useEffect, useState } from "react";
 import Slider from "react-slick";
-const page = () => {
+const Page = () => {
   const { isLoading, setIsLoading } = useContext(ContextLoading);
   const { push } = useRouter();
   const [research, setResearch] = useState<string>();
@@ -113,4 +113,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

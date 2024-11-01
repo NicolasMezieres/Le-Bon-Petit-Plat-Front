@@ -1,7 +1,6 @@
 "use client";
 import InputForm from "@/components/form/InputForm";
 import InputSubmit from "@/components/form/InputSubmit";
-import FoodLoader from "@/components/loader/FoodLoader";
 import MainTitle from "@/components/MainTitle";
 import { ContextLoading } from "@/context/context";
 import { Signup } from "@/Service/auth";
@@ -13,7 +12,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
-const page = () => {
+const Page = () => {
   const { setIsLoading } = useContext(ContextLoading);
   useEffect(() => {
     setIsLoading(false);
@@ -22,7 +21,6 @@ const page = () => {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm<signUpFormType>({
     mode: "all",
@@ -113,4 +111,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

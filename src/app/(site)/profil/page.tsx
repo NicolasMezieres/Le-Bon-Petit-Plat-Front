@@ -14,7 +14,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { FaRegEdit } from "react-icons/fa";
 import { toast } from "react-toastify";
 const patternPass = /^[A-Z{1}a-z{1}0-9{1}#?!@$%^&*-{1}]{8,}$/;
-const page = () => {
+const Page = () => {
   const { isLoading, setIsLoading } = useContext(ContextLoading);
   const { push } = useRouter();
   const [infoUser, setInfoUser] = useState<userInfoType>();
@@ -164,4 +164,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

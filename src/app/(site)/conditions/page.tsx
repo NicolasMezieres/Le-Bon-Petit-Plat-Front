@@ -4,7 +4,7 @@ import ThirdTitle from "@/components/ThirdTitle";
 import { ContextLoading } from "@/context/context";
 import React, { useContext, useEffect } from "react";
 
-const page = () => {
+const Page = () => {
   const { setIsLoading } = useContext(ContextLoading);
   useEffect(() => {
     setIsLoading(false);
@@ -181,4 +181,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
