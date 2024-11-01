@@ -5,15 +5,19 @@ import React, { useContext, useState } from "react";
 import { FaRegStar } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
 import SearchNotation from "../SearchNotation";
+import InputSubmit from "../form/InputSubmit";
+import { createCommentary } from "@/Service/commentary";
 const style = {
   position: "absolute" as "fixed",
 };
-const CommentaryCreate = () => {
-  const { tokenInfo } = useContext(ContextLoading);
+const CommentaryCreate = ({ id }: { id: string }) => {
+  const { tokenInfo, setIsLoading } = useContext(ContextLoading);
   const { push } = useRouter();
   const [open, setOpen] = useState(false);
   const [selectNote, setSelectNote] = useState<number>(0);
   const [starSelected, setStarSelected] = useState<React.JSX.Element[]>();
+  const [commentaryText, setCommentaryText] = useState<string>();
+  const [errorNote, setErrorNote] = useState<string>();
   const handleOpen = () => {
     if (tokenInfo) {
       setOpen(true);
@@ -23,6 +27,19 @@ const CommentaryCreate = () => {
   };
   function handleClose() {
     setOpen(false);
+  }
+  function addCommentary() {
+    if (!selectNote || selectNote <= 0 || selectNote > 5) {
+      setErrorNote("Veuillez mettre une note entre 1 et 5");
+    } else {
+      const data = { idRecipe: id, note: selectNote, text: commentaryText };
+      createCommentary(data).then((res) => {
+        if (res?.status === 201) {
+          setIsLoading(true);
+        }
+        handleClose();
+      });
+    }
   }
   return (
     <div>
@@ -42,18 +59,43 @@ const CommentaryCreate = () => {
       >
         <Box
           sx={style}
-          className="w-72 outline-none fixed top-0 right-0 flex flex-col justify-center items-center gap-8 rounded-2xl"
+          className="w-[292px] md:w-96 outline-none fixed top-0 right-0 flex flex-col justify-center items-center gap-8 rounded-2xl"
         >
-          <div className="bg-[#f2f2f2] border-l-2 border-[#de742e] w-full flex justify-center gap-10 items-center flex-col h-screen">
+          <div className="bg-[#f2f2f2] border-l-2 border-[#de742e] w-full flex justify-center gap-4 items-center flex-col h-screen px-4">
             <IoClose
-              onClick={() => handleClose}
+              onClick={() => handleClose()}
               className="orange absolute top-4 right-4 text-2xl md:text-[32px]"
             />
-            <SearchNotation
-              selectNote={selectNote}
-              setSelectNote={setSelectNote}
-              setStarSelected={setStarSelected}
-              starSelected={starSelected}
+            <div className="grid grid-cols-2 w-full">
+              <p className="self-start">Donnez votre avis</p>
+              <div className="flex justify-end">
+                <SearchNotation
+                  size="w-5 h-5 md:w-6 md:h-6"
+                  additionalCSS="flex"
+                  selectNote={selectNote}
+                  setSelectNote={setSelectNote}
+                  setStarSelected={setStarSelected}
+                  starSelected={starSelected}
+                />
+              </div>
+            </div>
+            {errorNote && <p className="text-red-600">{errorNote}</p>}
+            <div className="w-64 md:w-96 md:px-4 md:py-4 shadow-[0_0_2px_[#212121] ">
+              <textarea
+                className="w-full rounded-3xl px-4 py-4"
+                placeholder="Entrer votre message ici"
+                onChange={(e) => {
+                  setCommentaryText(e.target.value);
+                }}
+              />
+            </div>
+            <input
+              onClick={() => {
+                addCommentary();
+              }}
+              type="submit"
+              value="Valider"
+              className={`w-32 self-end text-center h-9 bg-[#de742e] text-white rounded-3xl drop-shadow-[0_2px_3px_#212121]`}
             />
           </div>
         </Box>

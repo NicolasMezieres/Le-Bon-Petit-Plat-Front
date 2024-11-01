@@ -2,8 +2,15 @@ import axios from "axios";
 import { axiosConfigWithToken } from "./category";
 import { toast } from "react-toastify";
 const favori = "favori/";
-export async function getFavoris(page?: number) {
-  const url = `${process.env.NEXT_PUBLIC_API_URL}${favori}?page=${page}`;
+export async function getFavoris(
+  page?: number,
+  search?: string,
+  nameCategory?: string,
+  note?: number
+) {
+  const url = `${process.env.NEXT_PUBLIC_API_URL}${favori}?page=${page}&search=${
+    search ? search : ""
+  }&nameCategory=${nameCategory ? nameCategory : ""}&note=${note ? note : ""}`;
   axiosConfigWithToken.headers.Authorization = `Bearer ${window.localStorage.getItem("token")}`;
   return axios
     .get(url, axiosConfigWithToken)

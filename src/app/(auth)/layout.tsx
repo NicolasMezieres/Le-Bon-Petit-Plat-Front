@@ -9,11 +9,6 @@ import { ContextLoading } from "@/context/context";
 import { useEffect, useState } from "react";
 import FoodLoader from "@/components/loader/FoodLoader";
 
-// export const metadata: Metadata = {
-//   title: "Le Bon Petit Plat",
-//   description: "Le bon petit plat est un site de partage de recette de cuisine.",
-// };
-
 export default function RootLayout({
   children,
 }: Readonly<{

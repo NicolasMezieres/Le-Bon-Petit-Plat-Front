@@ -32,7 +32,8 @@ const Category = ({
     } else {
       setSelectCategory(idCategory);
       if (setValue && field) {
-        setValue(field, value[1]);
+        console.log("ici");
+        setValue(field, value);
       }
       if (setValueCategory) {
         setValueCategory(value);

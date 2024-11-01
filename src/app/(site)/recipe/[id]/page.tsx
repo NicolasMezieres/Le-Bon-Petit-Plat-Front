@@ -42,7 +42,7 @@ const page = ({ params }: { params: { id: string } }) => {
       }
     });
     setIsLoading(false);
-  }, []);
+  }, [isLoading]);
   const stars = [];
   for (let i = 0; i < 5; i++) {
     if (recipeInfo && i < Number(recipeInfo.note)) {
@@ -86,16 +86,16 @@ const page = ({ params }: { params: { id: string } }) => {
   }
   if (recipeInfo)
     return (
-      <main className="grow relative py-5 px-6">
+      <main className="grow relative py-5 px-6 md:px-20">
         <PiKeyReturn color="#DE742E" className="w-9 h-8 absolute" />
-        <div>
+        <div className="flex flex-col gap-4 xl:w-full">
           <SecondTitle text={recipeInfo.title} />
           <Image
             width={1000}
             height={1000}
             src={imagePath + recipeInfo.picture}
             alt={`Picture's ${recipeInfo.title}`}
-            className="rounded-3xl h-64 object-cover"
+            className="rounded-3xl h-64 md:w-96 xl:w-1/2 xl:h-2/3 self-center object-cover"
           />
           <div className="flex justify-center">
             {stars &&
@@ -105,18 +105,20 @@ const page = ({ params }: { params: { id: string } }) => {
           </div>
           <p className="text-center">{recipeInfo.numberNote} avis</p>
           <div className="flex justify-center gap-20">
-            <MdOutlineAccessTime color="#DE742E" className="w-10 h-10" />
-            <PiChefHat color="#DE742E" className="w-10 h-10" />
-          </div>
-          <div className="flex justify-center gap-20">
-            <p>{newTime}</p>
-            <p>
-              {recipeInfo.difficulty
-                ? "Facile"
-                : recipeInfo.difficulty === 2
-                ? "Intermédiaire"
-                : "Difficile"}
-            </p>
+            <div className="flex flex-col items-center">
+              <MdOutlineAccessTime color="#DE742E" className="w-10 h-10" />
+              <p>{newTime}</p>
+            </div>
+            <div className="flex flex-col items-center relative">
+              <PiChefHat color="#DE742E" className="w-10 h-10" />
+              <p className="absolute bottom-0">
+                {recipeInfo.difficulty === 1
+                  ? "Facile"
+                  : recipeInfo.difficulty === 2
+                  ? "Intermédiaire"
+                  : "Difficile"}
+              </p>
+            </div>
           </div>
           {tokenInfo && (
             <div className="flex justify-center gap-1" onClick={() => toggleFav()}>
@@ -159,50 +161,77 @@ const page = ({ params }: { params: { id: string } }) => {
               />
             )}
           </div>
-          <section className="flex flex-col gap-4">
-            {recipeInfo.ingredient.map((Element, index) => {
-              return (
-                <div className="flex justify-start  gap-2.5" key={index}>
-                  <input type="checkbox" className="w-6 h-6" />
-                  <p>
-                    {piece
-                      ? ((Element.quantity / recipeInfo.piece) * piece).toFixed(2)
-                      : Element.quantity}
-                    {Element.unit} {Element.ingredient}
-                  </p>
-                </div>
-              );
-            })}
+          <section className="flex flex-col md:items-center ">
+            <div className="flex flex-col items-center gap-4">
+              {recipeInfo.ingredient.map((Element, index) => {
+                return (
+                  <div className="flex justify-start gap-2.5" key={index}>
+                    <input type="checkbox" className="w-6 h-6" />
+                    <p>
+                      {piece
+                        ? ((Element.quantity / recipeInfo.piece) * piece).toFixed(2)
+                        : Element.quantity}
+                      {Element.unit} {Element.ingredient}
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
           </section>
           <ThirdTitle
             text="Préparation"
             size="text-base md:text-xl xl:text-2xl"
             additionalCSS=" grid grid-cols-3  before:content-[''] inline before:border-[1px] before:border-[#212121] before:block before:self-center before:h-[1px] after:border-[1px] after:border-[#212121] after:block after:self-center after:h-[1px] "
           />
-          <section className="flex flex-col gap-4">
-            {recipeInfo.cookingStep.map((Element, index) => {
-              return (
-                <div className="flex flex-col gap-2.5" key={index}>
-                  <p>Étape {index + 1}</p>
-                  <p>{Element.step}</p>
-                </div>
-              );
-            })}
+          <section className="flex flex-col md:items-center">
+            <div className="flex flex-col items-center gap-4">
+              {recipeInfo.cookingStep.map((Element, index) => {
+                return (
+                  <div className="flex flex-col gap-2.5" key={index}>
+                    <p>Étape {index + 1}</p>
+                    <p>{Element.step}</p>
+                  </div>
+                );
+              })}
+            </div>
           </section>
-          <div className="shadow-[0_0_2px_#212121] rounded-3xl py-4 flex flex-col gap-4">
+          <div className="shadow-[0_0_2px_#212121] w-full md:w-80 rounded-3xl py-4 flex flex-col self-center gap-4">
             <ThirdTitle
-              text="Préparation"
+              text="La recette est terminer"
               size="text-base md:text-xl xl:text-2xl"
               additionalCSS="text-[#DE742E]"
             />
-            <CommentaryCreate />
+            <CommentaryCreate id={recipeInfo.id} />
           </div>
-
           <ThirdTitle
             text="Commentaires"
             size="text-base md:text-xl xl:text-2xl"
             additionalCSS=" grid grid-cols-3  before:content-[''] inline before:border-[1px] before:border-[#212121] before:block before:self-center before:h-[1px] after:border-[1px] after:border-[#212121] after:block after:self-center after:h-[1px] "
           />
+          {commentaryList && (
+            <section className="w-full md:w-80 self-center">
+              {commentaryList.length > 0 &&
+                commentaryList.map((Element, index) => {
+                  const stars = [];
+                  for (let i = 0; i < 5; i++) {
+                    if (i < Element.note) {
+                      stars.push(<FaStar color="#DE742E" className="w-6 h-6" key={i} />);
+                    } else {
+                      stars.push(<FaRegStar color="#DE742E" className="w-6 h-6" key={i} />);
+                    }
+                  }
+                  const date = new Date(Element.createdAt);
+                  return (
+                    <div className="shadow-[0_0_2px_#212121] p-4 rounded-3xl" key={index}>
+                      <p className="text-[#DE742E]">{Element.username}</p>
+                      <div className="flex">{stars}</div>
+                      <p>{Element.text}</p>
+                      <p className="text-[#888]">{date.toLocaleDateString("fr")}</p>
+                    </div>
+                  );
+                })}
+            </section>
+          )}
         </div>
       </main>
     );

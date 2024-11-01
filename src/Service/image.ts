@@ -7,7 +7,7 @@ export async function uploadImage(file: FileList) {
     headers: {
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-      "content-type": "'multipart/form-data",
+      "content-type": "multipart/form-data",
       Authorization: `Bearer ${window.localStorage.getItem("token")}`,
     },
   };

@@ -1,7 +1,7 @@
 import axios from "axios";
 import { axiosConfigWithToken } from "./category";
 import { toast } from "react-toastify";
-import { signUpType, updateMyInfoType, updateUserByAdminType, userListType } from "@/utils/type";
+import { updateMyInfoType, userListType } from "@/utils/type";
 const user = "user/";
 export async function allUser(page?: number) {
   axiosConfigWithToken.headers.Authorization = `Bearer ${window.localStorage.getItem("token")}`;

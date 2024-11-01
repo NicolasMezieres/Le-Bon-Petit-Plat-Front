@@ -14,7 +14,7 @@ import { toast } from "react-toastify";
 type params = {
   token: string;
 };
-const page = ({ params }: { params: params }) => {
+const Page = ({ params }: { params: params }) => {
   const { setIsLoading } = useContext(ContextLoading);
   const { push } = useRouter();
   useEffect(() => {
@@ -73,4 +73,4 @@ const page = ({ params }: { params: params }) => {
   );
 };
 
-export default page;
+export default Page;

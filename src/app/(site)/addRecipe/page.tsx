@@ -228,6 +228,7 @@ const page = () => {
             <InputForm
               textLabel={"Quantité"}
               type={"number"}
+              step={"0.01"}
               placeholder={"Entrer une quantité"}
               addditionalCSSDiv="flex flex-col items-center justify-center gap-2.5"
               additionalCSSInput="border-2 border-[#212121]"
@@ -351,7 +352,9 @@ const page = () => {
             "w-64 h-9 flex mx-auto mt-4 justify-center items-center bgBlue text-white self-center md:w-72 md:text-xl rounded-3xl drop-shadow-[0_2px_3px_#212121]"
           }
         >
-          <label htmlFor="addRecipe">Ajouter une recette</label>
+          <label htmlFor="addRecipe" onClick={() => console.log(watch("nameCategory"))}>
+            Ajouter une recette
+          </label>
         </div>
       </div>
     </main>

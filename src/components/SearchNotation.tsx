@@ -6,11 +6,15 @@ const SearchNotation = ({
   setSelectNote,
   setStarSelected,
   starSelected,
+  size,
+  additionalCSS,
 }: {
   selectNote: number;
   setSelectNote: React.Dispatch<React.SetStateAction<number>>;
   setStarSelected: React.Dispatch<React.SetStateAction<React.JSX.Element[] | undefined>>;
   starSelected: React.JSX.Element[] | undefined;
+  size?: string;
+  additionalCSS?: string;
 }) => {
   function changeNote(star: number) {
     if (selectNote === star) {
@@ -26,7 +30,7 @@ const SearchNotation = ({
         stars.push(
           <FaStar
             color="#DE742E"
-            className="w-6 h-6 cursor-pointer"
+            className={` ${size ? size : "w-6 h-6"} cursor-pointer`}
             onClick={() => changeNote(i + 1)}
             key={i}
           />
@@ -35,7 +39,7 @@ const SearchNotation = ({
         stars.push(
           <FaRegStar
             color="#DE742E"
-            className="w-6 h-6 cursor-pointer"
+            className={`${size ? size : "w-6 h-6"} cursor-pointer`}
             onClick={() => changeNote(i + 1)}
             key={i}
           />
@@ -45,7 +49,7 @@ const SearchNotation = ({
     setStarSelected(stars);
   }, [selectNote]);
   return (
-    <div className="flex mx-auto">
+    <div className={`${additionalCSS ? additionalCSS : "flex mx-auto"}`}>
       {starSelected &&
         starSelected.map((Element) => {
           return Element;

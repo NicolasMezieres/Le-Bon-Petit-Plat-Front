@@ -32,7 +32,7 @@ export type tokenType = {
 export type commentaryFormType = {
   idRecipe: string;
   note: number;
-  text: string;
+  text?: string;
 };
 
 export type recipeType = {

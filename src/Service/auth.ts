@@ -3,7 +3,6 @@ import { resetPasswordType, signInType, signUpType } from "@/utils/type";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { axiosConfigWithToken } from "./category";
-import { useRouter } from "next/navigation";
 const auth = "auth/";
 export const axiosConfig = {
   headers: {

@@ -11,6 +11,7 @@ const InputForm = ({
   autoComplete,
   defaultValue,
   sizeInput,
+  step,
 }: {
   addditionalCSSDiv?: string;
   textLabel: string;
@@ -23,6 +24,7 @@ const InputForm = ({
   register?: {};
   errors?: string;
   sizeInput?: string;
+  step?: string;
 }) => {
   return (
     <div className={addditionalCSSDiv}>
@@ -37,6 +39,7 @@ const InputForm = ({
         autoComplete={autoComplete ? autoComplete : "off"}
         id={textLabel}
         type={type}
+        step={step}
         placeholder={placeholder}
         className={` self-center ${
           sizeInput ? sizeInput : "md:text-xl md:w-80"
