@@ -74,13 +74,6 @@ const Page = ({ params }: { params: { id: string } }) => {
       }
     });
   }
-  function lessPeople() {
-    setRecipeInfo((prev) => {
-      if (prev && prev.piece) {
-        return { ...prev, piece: prev.piece - 1 };
-      }
-    });
-  }
   if (isLoading) {
     return <FoodLoader />;
   }

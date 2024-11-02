@@ -1,36 +1,27 @@
 "use client";
 import Category from "@/components/category/Category";
 import InputForm from "@/components/form/InputForm";
-import InputSubmit from "@/components/form/InputSubmit";
 import InputSelect from "@/components/InputSelect";
 import MainTitle from "@/components/MainTitle";
 import ThirdTitle from "@/components/ThirdTitle";
-import { ContextLoading } from "@/context/context";
 import { uploadImage } from "@/Service/image";
 import { createRecipe } from "@/Service/recipe";
-import { categoryType, ingredientFormType, recipeFormType, recipeType } from "@/utils/type";
+import { ingredientFormType, recipeFormType } from "@/utils/type";
 import { schemaIngredient } from "@/validator/Ingredient";
 import { schemaRecipe } from "@/validator/Recipe";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { BiSolidDish } from "react-icons/bi";
-import { FaBeerMugEmpty, FaCaretDown } from "react-icons/fa6";
-import { GiCharcuterie, GiCroissant } from "react-icons/gi";
 import { IoClose } from "react-icons/io5";
-import { LuIceCream2, LuSalad } from "react-icons/lu";
 import { toast } from "react-toastify";
 
 const Page = () => {
   const { push } = useRouter();
-  const { setIsLoading } = useContext(ContextLoading);
   const [image, setImage] = useState<string>();
   const [nameImage, setNameImage] = useState<string>();
-  const [categoryList, setCategoryList] = useState<categoryType[]>();
   const [selectCategory, setSelectCategory] = useState<number | undefined>(1);
-  const [unit, setUnit] = useState<string>();
   const [inputStep, setInputStep] = useState<{ step: string }>({ step: "" });
   const {
     register,

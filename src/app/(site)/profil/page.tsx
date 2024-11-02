@@ -5,7 +5,7 @@ import SecondTitle from "@/components/SecondTitle";
 import ThirdTitle from "@/components/ThirdTitle";
 import { ContextLoading } from "@/context/context";
 import { myInfo, updateUser } from "@/Service/user";
-import { categoryType, updateMyInfoType, userInfoType } from "@/utils/type";
+import { updateMyInfoType, userInfoType } from "@/utils/type";
 import { schemaUpdateMyInfo } from "@/validator/UpdateMyInfo";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useRouter } from "next/navigation";

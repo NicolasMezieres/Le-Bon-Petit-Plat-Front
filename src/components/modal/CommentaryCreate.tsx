@@ -5,7 +5,6 @@ import React, { useContext, useState } from "react";
 import { FaRegStar } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
 import SearchNotation from "../SearchNotation";
-import InputSubmit from "../form/InputSubmit";
 import { createCommentary } from "@/Service/commentary";
 const style = {
   position: "absolute" as "fixed",

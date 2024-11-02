@@ -8,10 +8,9 @@ import { allUser, deleteUser, searchUser, updateUserByAdmin } from "@/Service/us
 import { userListType } from "@/utils/type";
 import { useRouter } from "next/navigation";
 import React, { useContext, useEffect, useState } from "react";
-import { FaArrowRight } from "react-icons/fa";
 import { toast } from "react-toastify";
 
-const Page = () => {
+const page = () => {
   const { push } = useRouter();
   const { setIsLoading, isLoading } = useContext(ContextLoading);
   const [search, setSearch] = useState<string>();
@@ -135,4 +134,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default page;

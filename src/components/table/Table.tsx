@@ -6,7 +6,7 @@ const Table = ({
   children,
 }: {
   caseCSS: string;
-  colData: [];
+  colData: string[];
   children: React.ReactNode;
 }) => {
   return (

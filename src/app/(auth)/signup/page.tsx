@@ -8,7 +8,7 @@ import { signUpFormType } from "@/utils/type";
 import { schemaSignup } from "@/validator/Signup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useRouter } from "next/navigation";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 

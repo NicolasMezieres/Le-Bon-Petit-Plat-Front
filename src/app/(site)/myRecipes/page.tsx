@@ -1,7 +1,6 @@
 "use client";
 import Category from "@/components/category/Category";
 import FoodLoader from "@/components/loader/FoodLoader";
-import Pagination from "@/components/Pagination";
 import ListRecipes from "@/components/recipe/ListRecipes";
 import SearchBar from "@/components/SearchBar";
 import SearchNotation from "@/components/SearchNotation";

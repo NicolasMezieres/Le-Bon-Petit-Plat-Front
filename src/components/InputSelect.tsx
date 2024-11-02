@@ -1,4 +1,3 @@
-import { watch } from "fs";
 import React from "react";
 
 const InputSelect = ({
@@ -23,9 +22,9 @@ const InputSelect = ({
           {label}
         </option>
         {data &&
-          data.map((Element) => {
+          data.map((Element, index) => {
             return (
-              <option className={`${optionalCSS}`} value={Element.value}>
+              <option key={index} className={`${optionalCSS}`} value={Element.value}>
                 {Element.content}
               </option>
             );

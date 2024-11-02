@@ -7,7 +7,6 @@ import SearchNotation from "@/components/SearchNotation";
 import ThirdTitle from "@/components/ThirdTitle";
 import { ContextLoading } from "@/context/context";
 import { getFavoris } from "@/Service/favori";
-import { searchMyRecipes } from "@/Service/recipe";
 import { lookRecipeType } from "@/utils/type";
 import { useRouter } from "next/navigation";
 import React, { useContext, useEffect, useState } from "react";
@@ -23,16 +22,14 @@ const Page = () => {
   const [selectNote, setSelectNote] = useState<number>(0);
   const [starSelected, setStarSelected] = useState<React.JSX.Element[]>();
   const [valueCategory, setValueCategory] = useState<string>();
-  const [isFavori, setIsFavori] = useState<boolean>(true);
+  const isFavori = true;
   useEffect(() => {
-    console.log(valueCategory);
     getFavoris(page, search, valueCategory, selectNote).then((res) => {
       console.log(res);
       if (res.status === 200) {
         setListRecipes(res.data.data);
         setIsNextPage(res.data.isNextPage);
       } else if (res.status === 401) {
-        console.log(res);
         window.localStorage.removeItem("token");
         push("/signin");
       }

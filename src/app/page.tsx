@@ -1,6 +1,5 @@
 import Footer from "@/components/footer/Footer";
 import HeaderAuth from "@/components/header/HeaderAuth";
-import Image from "next/image";
 
 export default function Home() {
   return (
@@ -20,7 +19,7 @@ export default function Home() {
             </p>
             <p>
               Vous pouvez également partager vos propres recettes et évaluer celles publiées par
-              d'autres utilisateurs.
+              d&apos;autres utilisateurs.
             </p>
             <p>
               Retrouver toutes nos recettes

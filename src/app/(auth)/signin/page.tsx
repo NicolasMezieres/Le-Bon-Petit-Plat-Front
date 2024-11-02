@@ -21,8 +21,10 @@ const Page = () => {
   }, []);
   const { push } = useRouter();
   const [validate, setValidate] = useState<string>();
-  function onChange(value: any) {
-    setValidate(value);
+  function onChange(value: string | null) {
+    if (value) {
+      setValidate(value);
+    }
   }
   const {
     register,
@@ -77,7 +79,7 @@ const Page = () => {
         </div>
         <InputSubmit value={"Se connecter"} />
         <p className="text-center md:text-xl">
-          Vous n'êtes pas encore inscrit ?<br /> Cliquer
+          Vous n&apos;êtes pas encore inscrit ?<br /> Cliquer
           <a className="orange cursor-pointer" onClick={() => push("/signup")}>
             {" ici"}
           </a>
