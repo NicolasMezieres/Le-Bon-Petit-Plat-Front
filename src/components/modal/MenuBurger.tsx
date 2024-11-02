@@ -1,6 +1,5 @@
 import { ContextLoading } from "@/context/context";
 import { Box, Modal } from "@mui/material";
-import { useRouter } from "next/navigation";
 import React, { useContext, useState } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoClose } from "react-icons/io5";
@@ -8,7 +7,6 @@ import Redirection from "../Redirection";
 
 const MenuBurger = () => {
   const { tokenInfo } = useContext(ContextLoading);
-  const { push } = useRouter();
   const [open, setOpen] = useState(false);
   const style = {
     position: "absolute" as "fixed",

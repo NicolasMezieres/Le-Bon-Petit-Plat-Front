@@ -7,14 +7,11 @@ import { schemaRequestResetPassword } from "@/validator/RequestResetPassword";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { requestResetPassword } from "@/Service/auth";
 import { toast } from "react-toastify";
-import { useRouter } from "next/navigation";
 import MainTitle from "../MainTitle";
 import { ContextLoading } from "@/context/context";
 
 const ResetPassword = () => {
   const { setIsLoading } = useContext(ContextLoading);
-
-  const { push } = useRouter();
   const [open, setOpen] = useState(false);
   const style = {
     position: "absolute" as "fixed",
@@ -29,7 +26,6 @@ const ResetPassword = () => {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm<{ email: string }>({
     mode: "all",

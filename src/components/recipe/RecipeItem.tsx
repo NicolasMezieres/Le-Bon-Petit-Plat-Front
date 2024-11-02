@@ -18,7 +18,6 @@ const RecipeItem = ({ Element, isFavori }: { Element: lookRecipeType; isFavori?:
   const { tokenInfo, setIsLoading } = useContext(ContextLoading);
   function removeRecipe(id: string) {
     deleteRecipe(id).then((res) => {
-      console.log(res);
       if (res.status === 200) {
         toast.success(res.data.message);
         setIsLoading(true);
@@ -53,7 +52,9 @@ const RecipeItem = ({ Element, isFavori }: { Element: lookRecipeType; isFavori?:
   const newTime = String(Math.floor(totalTime / 60)) + ":" + String(totalTime % 60);
   function toggleFav() {
     toggleFavori(Element.id).then((res) => {
-      setIsLoading(true);
+      if (res.status === 200) {
+        setIsLoading(true);
+      }
     });
   }
   return (
