@@ -1,4 +1,4 @@
-export const imagePath = `${process.env.NEXT_PUBLIC_API_URL}imageFile/`;
+export const imagePath = `${process.env.NEXT_PUBLIC_API_URL}image/view/`;
 
 export const settings = {
   dots: true,
