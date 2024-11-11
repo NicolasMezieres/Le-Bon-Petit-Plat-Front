@@ -6,7 +6,6 @@ const Footer = () => {
   const { push } = useRouter();
   return (
     <footer className="bg-[#d0d0d0] w-screen z-50">
-      <div className="bg-[#d0d0d0] h-full absolute z-10"></div>
       <div className="flex justify-center gap-5 pt-5">
         <p className="cursor-pointer" onClick={() => push("/conditions")}>
           Conditions générales

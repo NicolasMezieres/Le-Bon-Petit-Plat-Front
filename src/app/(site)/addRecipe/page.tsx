@@ -241,6 +241,7 @@ const Page = () => {
                   { content: "Cuillère à soupe", value: "Cuillère à soupe" },
                   { content: "Cuillère à café", value: "Cuillère à café" },
                   { content: "Verre", value: "Verre" },
+                  { content: "piece", value: "piece" },
                 ]}
                 additionalCSS="bg-[#f8f8f8] rounded-[45px] shadow-[0_4px_4px_rgba(21,21,21,0.25)] w-44 md:w-64"
                 register={register2("unit")}

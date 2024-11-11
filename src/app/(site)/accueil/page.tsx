@@ -41,16 +41,22 @@ const Page = () => {
         }
       });
     } else {
-      search(valueCategory, research, page, selectNote).then((res) => {
-        console.log(res);
-        if (res?.status === 200) {
-          setListRecipes(res.data.data);
-          setIsNextPage(res.data.isNextPage);
-        } else if (res?.status === 401) {
-          window.localStorage.removeItem("token");
-          push("/signin");
-        }
-      });
+      const delay = setTimeout(() => {
+        search(valueCategory, research, page, selectNote).then((res) => {
+          console.log(res);
+          if (res?.status === 200) {
+            setListRecipes(res.data.data);
+            setIsNextPage(res.data.isNextPage);
+          } else if (res?.status === 401) {
+            window.localStorage.removeItem("token");
+            push("/signin");
+          }
+        });
+      }, 500);
+      return () => {
+        setIsLoading(false);
+        clearTimeout(delay);
+      };
     }
     setIsLoading(false);
   }, [research, page, isLoading, valueCategory, selectNote]);

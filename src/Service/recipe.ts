@@ -58,7 +58,6 @@ export async function mostRecent() {
       toast.error(e.response.data.message);
     });
 }
-//todo regler le problème si nameCategory = undefined
 export async function search(nameCategory?: string, search?: string, page?: number, note?: number) {
   const url = `${process.env.NEXT_PUBLIC_API_URL}${recipe}search?nameCategory=${
     nameCategory ? nameCategory : ""
@@ -66,9 +65,11 @@ export async function search(nameCategory?: string, search?: string, page?: numb
   return axios
     .get(url, axiosConfig)
     .then((res) => {
+      console.log(res, "frere");
       return res;
     })
     .catch((e) => {
+      console.log(e, "fraté");
       toast.error(e.response.data.message);
       return e;
     });

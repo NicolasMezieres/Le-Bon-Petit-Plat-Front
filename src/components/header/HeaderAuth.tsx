@@ -1,9 +1,13 @@
 import React from "react";
 import Logo from "./Logo";
 
-const HeaderAuth = () => {
+const HeaderAuth = ({ additionalCSS }: { additionalCSS?: string }) => {
   return (
-    <header className="flex justify-center mt-4 md:mt-5 relative z-10">
+    <header
+      className={`flex justify-center mt-4 md:mt-5 ${
+        additionalCSS ? additionalCSS : "relative"
+      } z-10 `}
+    >
       <Logo />
     </header>
   );

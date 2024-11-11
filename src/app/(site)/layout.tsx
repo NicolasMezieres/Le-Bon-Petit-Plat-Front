@@ -37,14 +37,7 @@ export default function RootLayout({
   }, []);
   return (
     <html lang="fr">
-      <head>
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
-        />
-        <script src="https://www.google.com/recaptcha/api.js?hl=fr" async defer></script>
-      </head>
-      <body className="font-['Lato']">
+      <body>
         {isLoad ? (
           <div className="fixed top-20 right-20">
             <FoodLoader />

@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import Footer from "@/components/footer/Footer";
+import HeaderAuth from "@/components/header/HeaderAuth";
 
 export const metadata: Metadata = {
   title: "Le Bon Petit Plat",
@@ -15,6 +17,10 @@ export default function RootLayout({
   return (
     <html lang="fr">
       <head>
+        <meta
+          name="description"
+          content="Page d'accueil afin de présenter le site le Bon Petit Plat, un endroit ou l'on peut partager ces recettes ou par manque d'idée en rechercher"
+        />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" />
         <link
@@ -22,7 +28,7 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body>{children}</body>
+      <body className="flex flex-col font-['lato'] ">{children}</body>
     </html>
   );
 }
