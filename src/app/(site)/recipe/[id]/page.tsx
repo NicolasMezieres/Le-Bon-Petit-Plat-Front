@@ -23,6 +23,7 @@ const Page = ({ params }: { params: { id: string } }) => {
   const [piece, setPiece] = useState<number>();
   useEffect(() => {
     findRecipeById(params.id).then((res) => {
+      console.log(res);
       if (res?.status === 200) {
         setRecipeInfo(res.data.data);
         setCommentaryList(res.data.commentary);
