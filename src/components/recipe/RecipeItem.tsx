@@ -59,12 +59,13 @@ const RecipeItem = ({ Element, isFavori }: { Element: lookRecipeType; isFavori?:
   }
   return (
     <article className="relative w-[300px] mx-auto justify-self-center flex md:mx-0 pt-8 pb-5 bg-[#EAEAEA] borderOrange border-2 rounded-[20px]">
-      {Element.idUser === tokenInfo?.sub && (
-        <IoClose
-          className="absolute top-4 right-4 w-6 h-6 orange"
-          onClick={() => removeRecipe(Element.id)}
-        />
-      )}
+      {Element.idUser === tokenInfo?.sub ||
+        (tokenInfo?.role === "Admin" && (
+          <IoClose
+            className="absolute top-4 right-4 w-6 h-6 orange"
+            onClick={() => removeRecipe(Element.id)}
+          />
+        ))}
       <div className="mx-auto flex flex-col items-center gap-4">
         <Image
           width={500}

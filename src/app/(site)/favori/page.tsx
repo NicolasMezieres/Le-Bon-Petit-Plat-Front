@@ -23,9 +23,9 @@ const Page = () => {
   const [starSelected, setStarSelected] = useState<React.JSX.Element[]>();
   const [valueCategory, setValueCategory] = useState<string>();
   const isFavori = true;
+  
   useEffect(() => {
     getFavoris(page, search, valueCategory, selectNote).then((res) => {
-      console.log(res);
       if (res.status === 200) {
         setListRecipes(res.data.data);
         setIsNextPage(res.data.isNextPage);
@@ -34,9 +34,9 @@ const Page = () => {
         push("/signin");
       }
     });
-
     setIsLoading(false);
   }, [search, page, isLoading, valueCategory, selectNote]);
+
   if (isLoading) {
     <FoodLoader />;
   }
