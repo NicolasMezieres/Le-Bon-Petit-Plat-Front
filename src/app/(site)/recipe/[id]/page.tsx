@@ -178,7 +178,7 @@ const Page = ({ params }: { params: { id: string } }) => {
             additionalCSS=" grid grid-cols-3  before:content-[''] inline before:border-[1px] before:border-[#212121] before:block before:self-center before:h-[1px] after:border-[1px] after:border-[#212121] after:block after:self-center after:h-[1px] "
           />
           <section className="flex flex-col md:items-center">
-            <div className="flex flex-col items-center gap-4">
+            <div className="flex flex-col items-start gap-4">
               {recipeInfo.cookingStep.map((Element, index) => {
                 return (
                   <div className="flex flex-col gap-2.5" key={index}>
