@@ -6,28 +6,16 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useContext } from "react";
 import { FaHeart, FaRegStar, FaStar } from "react-icons/fa";
-import { IoClose } from "react-icons/io5";
 import { toast } from "react-toastify";
 import ThirdTitle from "../ThirdTitle";
 import { MdOutlineAccessTime } from "react-icons/md";
 import { PiChefHat } from "react-icons/pi";
 import { toggleFavori } from "@/Service/favori";
+import DeleteRecipe from "../modal/DeleteRecipe";
 
 const RecipeItem = ({ Element, isFavori }: { Element: lookRecipeType; isFavori?: boolean }) => {
   const { push } = useRouter();
   const { tokenInfo, setIsLoading } = useContext(ContextLoading);
-
-  function removeRecipe(id: string) {
-    deleteRecipe(id).then((res) => {
-      if (res.status === 200) {
-        toast.success(res.data.message);
-        setIsLoading(true);
-      } else if (res.status === 401) {
-        window.localStorage.removeItem("token");
-        push("/signin");
-      }
-    });
-  }
   const stars = [];
   for (let i = 0; i < 5; i++) {
     if (i < Math.round(parseFloat(Element.note))) {
@@ -61,10 +49,7 @@ const RecipeItem = ({ Element, isFavori }: { Element: lookRecipeType; isFavori?:
   return (
     <article className="relative w-[300px] mx-auto justify-self-center flex md:mx-0 pt-8 pb-5 bg-[#EAEAEA] borderOrange border-2 rounded-[20px]">
       {(Element.idUser === tokenInfo?.sub || tokenInfo?.role === "Admin") && (
-        <IoClose
-          className="absolute top-4 right-4 w-6 h-6 orange"
-          onClick={() => removeRecipe(Element.id)}
-        />
+        <DeleteRecipe Recipe={Element} />
       )}
       <div className="mx-auto flex flex-col items-center gap-4">
         <Image

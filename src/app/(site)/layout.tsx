@@ -36,40 +36,38 @@ export default function RootLayout({
     setIsLoad(false);
   }, []);
   return (
-    <html lang="fr">
-      <body>
-        {isLoad ? (
-          <div className="fixed top-20 right-20">
-            <FoodLoader />
-          </div>
-        ) : (
-          <div>
-            <ToastContainer
-              position="top-right"
-              autoClose={5000}
-              hideProgressBar={false}
-              newestOnTop={false}
-              closeOnClick
-              rtl={false}
-              pauseOnFocusLoss
-              draggable
-              pauseOnHover
-              theme="light"
-              transition={Bounce}
-            />
-            <ContextLoading.Provider value={{ isLoading, setIsLoading, tokenInfo, setTokenInfo }}>
-              <Header />
-              {isLoading && (
-                <div className="fixed top-20 md:top-40">
-                  <FoodLoader />
-                </div>
-              )}
-              {children}
-            </ContextLoading.Provider>
-            <Footer />
-          </div>
-        )}
-      </body>
-    </html>
+    <body>
+      {isLoad ? (
+        <div className="fixed top-20 right-20">
+          <FoodLoader />
+        </div>
+      ) : (
+        <div>
+          <ToastContainer
+            position="top-right"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+            transition={Bounce}
+          />
+          <ContextLoading.Provider value={{ isLoading, setIsLoading, tokenInfo, setTokenInfo }}>
+            <Header />
+            {isLoading && (
+              <div className="fixed top-20 md:top-40">
+                <FoodLoader />
+              </div>
+            )}
+            {children}
+          </ContextLoading.Provider>
+          <Footer />
+        </div>
+      )}
+    </body>
   );
 }

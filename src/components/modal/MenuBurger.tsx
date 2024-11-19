@@ -23,7 +23,7 @@ const MenuBurger = () => {
   return (
     <div className="">
       <GiHamburgerMenu
-        className="text-xl md:text-4xl"
+        className="text-xl md:text-4xl cursor-pointer"
         onClick={() => {
           handleOpen();
         }}
@@ -41,7 +41,7 @@ const MenuBurger = () => {
           <div className="bg-[#f2f2f2] border-l-2 border-[#de742e] w-full flex justify-center gap-10 items-center flex-col h-screen">
             <IoClose
               onClick={() => setOpen(false)}
-              className="orange absolute top-4 right-4 text-2xl md:text-[32px]"
+              className="orange absolute top-4 right-4 text-2xl md:text-[32px] cursor-pointer"
             />
             <div onClick={handleClose}>
               <Redirection text="Accueil" redirection={"/accueil"} onClick={handleClose} />
