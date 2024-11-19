@@ -16,6 +16,7 @@ import { toggleFavori } from "@/Service/favori";
 const RecipeItem = ({ Element, isFavori }: { Element: lookRecipeType; isFavori?: boolean }) => {
   const { push } = useRouter();
   const { tokenInfo, setIsLoading } = useContext(ContextLoading);
+
   function removeRecipe(id: string) {
     deleteRecipe(id).then((res) => {
       if (res.status === 200) {

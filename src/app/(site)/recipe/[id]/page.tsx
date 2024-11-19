@@ -156,15 +156,15 @@ const Page = ({ params }: { params: { id: string } }) => {
             )}
           </div>
           <section className="flex flex-col md:items-center ">
-            <div className="flex flex-col items-center gap-4">
+            <div className="flex flex-col items-start gap-4">
               {recipeInfo.ingredient.map((Element, index) => {
                 return (
                   <div className="flex justify-start gap-2.5" key={index}>
                     <input type="checkbox" className="w-6 h-6" />
                     <p>
                       {piece
-                        ? ((Element.quantity / recipeInfo.piece) * piece).toFixed(2)
-                        : Element.quantity}
+                        ? ((Element.quantity / recipeInfo.piece) * piece).toFixed(2) + " "
+                        : Element.quantity + " "}
                       {Element.unit} {Element.ingredient}
                     </p>
                   </div>
