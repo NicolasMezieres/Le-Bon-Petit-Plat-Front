@@ -23,6 +23,8 @@ const Page = () => {
   const [nameImage, setNameImage] = useState<string>();
   const [selectCategory, setSelectCategory] = useState<number | undefined>(1);
   const [inputStep, setInputStep] = useState<{ step: string }>({ step: "" });
+  const [inputQuantity, setInputQuantity] = useState<number>();
+  const [inputIngredient, setInputIngredient] = useState<string>();
   const {
     register,
     handleSubmit,
@@ -79,13 +81,13 @@ const Page = () => {
   });
   const ingredientSubmit: SubmitHandler<ingredientFormType> = async (data) => {
     const newData = watch("ingredient");
-    console.log(data);
     if (newData) {
       newData.push(data);
       setValue("ingredient", newData);
     } else {
       setValue("ingredient", [data]);
     }
+    //ici
   };
   function removeIngredient(index: number) {
     const data = watch("ingredient");
@@ -98,7 +100,6 @@ const Page = () => {
     const ExistingStep = watch("cookingStep");
     if (inputStep.step) {
       if (ExistingStep) {
-        console.log(inputStep.step);
         ExistingStep.push(inputStep);
         setValue("cookingStep", ExistingStep);
       } else {
@@ -106,7 +107,6 @@ const Page = () => {
       }
       setInputStep({ step: "" });
     }
-    console.log(watch("ingredient"));
   }
   function removeStep(index: number) {
     const existingStep = watch("cookingStep");
@@ -216,17 +216,23 @@ const Page = () => {
             onSubmit={handleSubmit2(ingredientSubmit)}
             className="bg-[#f8f8f8] flex flex-col items-center gap-4 w-64 md:w-72 py-4 rounded-3xl shadow-[0_0_2px_#212121]"
           >
-            <InputForm
-              textLabel={"Quantité"}
-              type={"number"}
-              step={"0.01"}
-              placeholder={"Entrer une quantité"}
-              addditionalCSSDiv="flex flex-col items-center justify-center gap-2.5"
-              additionalCSSInput="border-2 border-[#212121]"
-              sizeInput="w-44 md:w-64"
-              register={register2("quantity")}
-              errors={errors2.quantity?.message}
-            />
+            <div className="flex flex-col items-center justify-center gap-2.5">
+              <label htmlFor="quantity" className="text-center md:text-xl md:text-center">
+                Quantité
+              </label>
+              <input
+                id="quantity"
+                type="number"
+                step={0.01}
+                min={0}
+                placeholder="Entrer une quantité"
+                className="border-2 border-[#212121] w-44 md:w-64 text-center rounded-3xl"
+                {...register2("quantity")}
+                value={inputQuantity}
+                onChange={(e) => setInputQuantity(Number(e.target.value))}
+              />
+              {errors2.quantity && <p className="text-red-600">{errors2.quantity.message}</p>}
+            </div>
             <div>
               <ThirdTitle
                 size="text-base"
@@ -248,24 +254,31 @@ const Page = () => {
                 errors={errors2.unit?.message}
               />
             </div>
-
-            <InputForm
-              addditionalCSSDiv="flex flex-col items-center justify-center gap-2.5"
-              additionalCSSInput="border-2 border-[#212121]"
-              sizeInput="w-44 md:w-64"
-              textLabel={"ingredient"}
-              type={"text"}
-              placeholder={"Entrer un Ingrédient"}
-              register={register2("ingredient")}
-              errors={errors2.ingredient?.message}
-            />
+            <div className="flex flex-col items-center justify-center gap-2.5">
+              <label htmlFor="ingredient" className="text-center md:text-xl md:text-center">
+                Quantité
+              </label>
+              <input
+                id="ingredient"
+                type="text"
+                step={0.01}
+                min={0}
+                placeholder="Entrer une Ingrédient"
+                className="border-2 border-[#212121] w-44 md:w-64 text-center rounded-3xl"
+                {...register2("ingredient")}
+                value={inputIngredient}
+                onChange={(e) => setInputIngredient(e.target.value)}
+              />
+              {errors2.ingredient && <p className="text-red-600">{errors2.ingredient.message}</p>}
+            </div>
             <input
-              onClick={() => {
-                console.log(watch2("quantity"), watch2("unit"), watch2("ingredient"));
-              }}
               type="submit"
               value={"Valider"}
               className="bg-[#DE742E] text-white rounded-[20px] w-32 h-7 shadow-[0_1px_1px_#212121]"
+              onClick={() => {
+                setInputQuantity(0);
+                setInputIngredient("");
+              }}
             />
           </form>
         </div>
@@ -283,7 +296,7 @@ const Page = () => {
                   </p>
                   <IoClose
                     onClick={() => removeIngredient(index)}
-                    className="absolute top-0 text-2xl right-4 text-[#DE742E]"
+                    className="absolute cursor-pointer top-0 text-2xl right-4 text-[#DE742E]"
                   />
                 </div>
               );
@@ -330,7 +343,7 @@ const Page = () => {
                   </p>
                   <IoClose
                     onClick={() => removeStep(index)}
-                    className="absolute top-0 text-2xl right-4 text-[#DE742E]"
+                    className="absolute cursor-pointer top-0 text-2xl right-4 text-[#DE742E]"
                   />
                 </div>
               );

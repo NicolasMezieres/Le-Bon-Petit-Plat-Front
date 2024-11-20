@@ -3,7 +3,7 @@ export const schemaIngredient = yup.object({
   quantity: yup
     .number()
     .transform((value) => (isNaN(value) ? undefined : value))
-    .min(0.01, "Minimum 0.01")
+    .min(0, "Minimum 0")
     .max(1000, "Maximum 1000")
     .required("Minimum 0.01"),
   unit: yup

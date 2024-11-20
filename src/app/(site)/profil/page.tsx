@@ -143,7 +143,7 @@ const Page = () => {
                 placeholder={"Mot de passe"}
                 register={register("password")}
               />
-              {errorPassword && <p className="text-red-600">{errorPassword}</p>}
+              {errorPassword && <p className="text-red-600 text-center">{errorPassword}</p>}
               <InputForm
                 defaultValue={null}
                 addditionalCSSDiv="flex flex-col"
@@ -152,7 +152,9 @@ const Page = () => {
                 placeholder={"Confirmation mot de passe"}
                 register={register("confirmPassword")}
               />
-              {errorConfirmPassword && <p className="text-red-600">{errorConfirmPassword}</p>}
+              {errorConfirmPassword && (
+                <p className="text-red-600 text-center">{errorConfirmPassword}</p>
+              )}
               <div className="pt-5">
                 <InputSubmit value={"Confirmer"} />
               </div>
