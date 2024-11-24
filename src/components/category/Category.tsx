@@ -64,7 +64,6 @@ const Category = ({
     } else {
       setSelectCategory(idCategory);
       if (setValue && field) {
-        console.log("ici");
         setValue(field, value);
       }
       if (setValueCategory) {

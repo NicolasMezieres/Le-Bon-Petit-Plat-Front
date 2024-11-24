@@ -43,7 +43,6 @@ const Page = () => {
     } else {
       const delay = setTimeout(() => {
         search(valueCategory, research, page, selectNote).then((res) => {
-          console.log(res);
           if (res?.status === 200) {
             setListRecipes(res.data.data);
             setIsNextPage(res.data.isNextPage);

@@ -75,7 +75,6 @@ const Page = ({ params }: { params: { id: string } }) => {
   const newTime = String(Math.floor(totalTime / 60)) + ":" + String(totalTime % 60);
   function toggleFav() {
     toggleFavori(params.id).then((res) => {
-      console.log(res);
       if (res.status === 201) {
         setIsFavorite((prev) => !prev);
       }

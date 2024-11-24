@@ -45,7 +45,6 @@ export async function isUsedIdentifier(identifier: string) {
       return res;
     })
     .catch((e) => {
-      console.log(e);
       toast.error(e.response.data.message);
       return e;
     });
@@ -59,7 +58,6 @@ export async function requestResetPassword(email: { email: string }) {
       return res;
     })
     .catch((e) => {
-      console.log(e);
       toast.error(e.response.data.message);
     });
 }
@@ -67,7 +65,6 @@ export async function requestResetPassword(email: { email: string }) {
 export async function resetPassword(password: resetPasswordType, token?: string) {
   const url = `${process.env.NEXT_PUBLIC_API_URL}${auth}resetPassword`;
   axiosConfigWithToken.headers.Authorization = `Bearer ${token}`;
-  console.log(axiosConfigWithToken);
   return axios
     .patch(url, password, axiosConfigWithToken)
     .then((res) => {
@@ -104,7 +101,6 @@ export async function reCaptcha(
     );
 
     if (response.data.success) {
-      console.log(`Registration success with score: ${response.data.score}`);
       setSubmitStatus("Registration Successful. Welcome!");
     } else {
       console.error(`Registration failure with score: ${response.data.score}`);

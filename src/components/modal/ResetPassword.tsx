@@ -34,7 +34,6 @@ const ResetPassword = () => {
   const onSubmit: SubmitHandler<{ email: string }> = async (data) => {
     setIsLoading(true);
     requestResetPassword(data).then((res) => {
-      console.log(res);
       if (res?.status === 201) {
         toast.success(res.data.message);
         handleClose();

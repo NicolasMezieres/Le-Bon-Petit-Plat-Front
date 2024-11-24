@@ -49,7 +49,6 @@ const page = () => {
     }
   }
   function updateUser(user: userListType, id: string) {
-    console.log(user, "ici");
     updateUserByAdmin(user, id).then((res) => {
       if (res.status === 200) {
         toast.success(res.data.message);
@@ -62,7 +61,6 @@ const page = () => {
   }
   function removeUser(id: string) {
     deleteUser(id).then((res) => {
-      console.log(res);
       if (res.status === 200) {
         toast.success(res.data.message);
         setIsLoading(true);

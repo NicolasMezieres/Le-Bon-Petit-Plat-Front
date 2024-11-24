@@ -16,7 +16,6 @@ const DeleteCommentary = ({ commentary }: { commentary: commentaryType }) => {
   const [open, setOpen] = useState(false);
   function removeCommentary(id: string) {
     deleteCommentary(id).then((res) => {
-      console.log(res);
       if (res.status === 200) {
         toast.success(res.data.message);
         setIsLoading(true);

@@ -39,11 +39,9 @@ const Page = () => {
     const imageForm = watch("file");
     if (imageForm) {
       uploadImage(imageForm).then((res) => {
-        console.log(res);
         if (res?.status === 201) {
           data.picture = res.data;
           createRecipe(data).then((res) => {
-            console.log(res);
             if (res.status === 401) {
               push("/signin");
             } else if (res.status === 201) {
@@ -58,7 +56,6 @@ const Page = () => {
   useEffect(() => {
     const imageForm = watch("file");
     if (imageForm && imageForm.length > 0) {
-      console.log(imageForm);
       const blob = new Blob([imageForm[0]]);
       const url = URL.createObjectURL(blob);
       setNameImage(imageForm[0].name);
@@ -356,7 +353,7 @@ const Page = () => {
             "w-64 h-9 flex mx-auto mt-4 justify-center items-center bgBlue text-white self-center md:w-72 md:text-xl rounded-3xl drop-shadow-[0_2px_3px_#212121]"
           }
         >
-          <label htmlFor="addRecipe" onClick={() => console.log(watch("nameCategory"))}>
+          <label htmlFor="addRecipe">
             Ajouter une recette
           </label>
         </div>

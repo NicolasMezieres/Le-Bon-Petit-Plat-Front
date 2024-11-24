@@ -65,11 +65,9 @@ export async function search(nameCategory?: string, search?: string, page?: numb
   return axios
     .get(url, axiosConfig)
     .then((res) => {
-      console.log(res, "frere");
       return res;
     })
     .catch((e) => {
-      console.log(e, "fraté");
       toast.error(e.response.data.message);
       return e;
     });
