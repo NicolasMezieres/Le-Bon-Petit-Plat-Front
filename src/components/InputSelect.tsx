@@ -7,17 +7,23 @@ const InputSelect = ({
   optionalCSS,
   label,
   data,
+  defaultValue,
 }: {
   additionalCSS?: string;
   register?: {};
   errors?: string;
   optionalCSS?: string;
   label: string;
+  defaultValue?: string;
   data: { content: string; value: string | number | readonly string[] | undefined }[];
 }) => {
   return (
     <>
-      <select {...register} className={`appearance-none text-center ${additionalCSS}`}>
+      <select
+        {...register}
+        defaultValue={defaultValue}
+        className={`appearance-none text-center ${additionalCSS}`}
+      >
         <option value={""} hidden>
           {label}
         </option>

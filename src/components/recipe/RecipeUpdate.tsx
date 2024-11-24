@@ -1,0 +1,422 @@
+import { ContextLoading } from "@/context/context";
+import { Box, Modal } from "@mui/material";
+import { useRouter } from "next/navigation";
+import React, { useContext, useEffect, useState } from "react";
+import { FaRegEdit } from "react-icons/fa";
+import { IoClose } from "react-icons/io5";
+import { ingredientFormType, lookRecipeType, recipeFormType } from "@/utils/type";
+import { toast } from "react-toastify";
+import ThirdTitle from "../ThirdTitle";
+import InputSelect from "../InputSelect";
+import InputForm from "../form/InputForm";
+import Category from "../category/Category";
+import Image from "next/image";
+import MainTitle from "../MainTitle";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { schemaRecipe } from "@/validator/Recipe";
+import { uploadImage } from "@/Service/image";
+import { updateRecipe } from "@/Service/recipe";
+import { schemaIngredient } from "@/validator/Ingredient";
+const style = {
+  position: "absolute" as "fixed",
+};
+const RecipeUpdate = ({ Recipe }: { Recipe: lookRecipeType }) => {
+  const { tokenInfo, setIsLoading } = useContext(ContextLoading);
+  const { push } = useRouter();
+  const [image, setImage] = useState<string>(
+    `${process.env.NEXT_PUBLIC_API_URL}image/view/${Recipe.picture}`
+  );
+  const [nameImage, setNameImage] = useState<string>(Recipe.picture);
+  const [selectCategory, setSelectCategory] = useState<number | undefined>();
+  const [inputStep, setInputStep] = useState<{ step: string }>({ step: "" });
+  const [inputQuantity, setInputQuantity] = useState<number>();
+  const [inputIngredient, setInputIngredient] = useState<string>();
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => {
+    if (tokenInfo) {
+      setOpen(true);
+    } else {
+      push("/signin");
+    }
+  };
+  function handleClose() {
+    setOpen(false);
+  }
+  const {
+    register,
+    handleSubmit,
+    watch,
+    setValue,
+    formState: { errors },
+  } = useForm<recipeFormType>({
+    mode: "all",
+    resolver: yupResolver(schemaRecipe),
+  });
+  const onSubmit: SubmitHandler<recipeFormType> = async (data) => {
+    const imageForm = watch("file");
+    if (imageForm && imageForm.length > 0) {
+      uploadImage(imageForm).then((res) => {
+        if (res?.status === 201) {
+          data.picture = res.data;
+          updateRecipe(data, Recipe.id).then((res) => {
+            if (res.status === 401) {
+              push("/signin");
+            } else if (res.status === 200) {
+              toast.success(res.data.message);
+              setIsLoading(true);
+            }
+          });
+        }
+      });
+    } else {
+      updateRecipe(data, Recipe.id).then((res) => {
+        if (res.status === 401) {
+          push("/signin");
+        } else if (res.status === 200) {
+          toast.success(res.data.message);
+          setIsLoading(true);
+        }
+      });
+    }
+  };
+  useEffect(() => {
+    const imageForm = watch("file");
+    if (imageForm && imageForm.length > 0) {
+      const blob = new Blob([imageForm[0]]);
+      const url = URL.createObjectURL(blob);
+      setNameImage(imageForm[0].name);
+      setImage(url);
+      setValue("picture", imageForm[0].name);
+    }
+  }, [watch("file")]);
+  useEffect(() => {
+    setValue("nameCategory", Recipe.category.name);
+    setValue("cookingStep", Recipe.cookingStep);
+    setValue("ingredient", Recipe.ingredient);
+    setValue("picture", Recipe.picture);
+  }, []);
+  const {
+    register: register2,
+    handleSubmit: handleSubmit2,
+    watch: watch2,
+    setValue: setValue2,
+    formState: { errors: errors2 },
+  } = useForm<ingredientFormType>({
+    mode: "all",
+    resolver: yupResolver(schemaIngredient),
+  });
+  const ingredientSubmit: SubmitHandler<ingredientFormType> = async (data) => {
+    const newData = watch("ingredient");
+    if (newData) {
+      newData.push(data);
+      setValue("ingredient", newData);
+    } else {
+      setValue("ingredient", [data]);
+    }
+  };
+  function removeIngredient(index: number) {
+    const data = watch("ingredient");
+    if (data) {
+      const newData = data.filter((Element) => Element !== data[index]);
+      setValue("ingredient", newData);
+    }
+  }
+  function addStep() {
+    const ExistingStep = watch("cookingStep");
+    if (inputStep.step) {
+      if (ExistingStep) {
+        ExistingStep.push(inputStep);
+        setValue("cookingStep", ExistingStep);
+      } else {
+        setValue("cookingStep", [inputStep]);
+      }
+      setInputStep({ step: "" });
+    }
+  }
+  function removeStep(index: number) {
+    const existingStep = watch("cookingStep");
+    if (existingStep) {
+      const newData = existingStep.filter((Element) => Element !== existingStep[index]);
+      setValue("cookingStep", newData);
+    }
+  }
+  return (
+    <div>
+      <FaRegEdit color="#DE742E" className="w-10 h-10 orange cursor-pointer" onClick={handleOpen} />
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+        className="flex items-center overflow-y-auto"
+      >
+        <Box
+          sx={style}
+          className="w-[292px] md:w-96 outline-none pt-4 flex flex-col justify-center items-center gap-8 rounded-2xl"
+        >
+          <div className=" w-full flex justify-center gap-4 items-center flex-col px-4">
+            <div className="w-80 relative borderOrange border-2 rounded-[45px] py-5 md:w-[608px] bg-[#EAEAEA] mb-4">
+              <IoClose
+                onClick={() => handleClose()}
+                className="orange cursor-pointer absolute top-4 right-4 text-2xl md:text-[32px]"
+              />
+              <MainTitle text="Ajouter une recette" additionalCSS="mb-4" />
+              <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-center gap-4">
+                <InputForm
+                  defaultValue={Recipe.title}
+                  addditionalCSSDiv="flex flex-col items-center"
+                  textLabel={"Nom de la recette"}
+                  type={"text"}
+                  placeholder={"Entrer le Nom de la recette"}
+                  register={register("title")}
+                  errors={errors.title?.message}
+                />
+                <ThirdTitle text={"Image"} />
+                <InputForm
+                  addditionalCSSDiv="flex flex-col items-center"
+                  additionalCSSLabel="w-36 bg-[#f8f8f8] rounded-3xl shadow-[0_4px_4px_rgba(0,0,0,0.25)] md:w-44"
+                  additionalCSSInput="hidden"
+                  textLabel={"Choisir une image"}
+                  type={"file"}
+                  placeholder={"Veuillez choisir une image"}
+                  register={register("file")}
+                  errors={errors.picture?.message}
+                />
+                {nameImage && <p>{nameImage}</p>}
+                {image && (
+                  <Image
+                    width={1000}
+                    height={1000}
+                    src={image}
+                    alt="Image de la recette"
+                    className="w-64 md:w-80"
+                  />
+                )}
+                <ThirdTitle additionalCSS="md:text-[28px]" text="Les catégories" />
+                <Category
+                  defaultValue={Recipe.category.name}
+                  selectCategory={selectCategory}
+                  setSelectCategory={setSelectCategory}
+                  setValue={setValue}
+                  field="nameCategory"
+                />
+                <InputForm
+                  defaultValue={String(Recipe.piece)}
+                  addditionalCSSDiv="flex flex-col items-center justify-center"
+                  additionalCSSInput="md:text-xl text-center"
+                  sizeInput="w-28 md:w-36"
+                  textLabel={"Nombre de part"}
+                  type={"number"}
+                  placeholder={"4"}
+                  register={register("piece")}
+                  errors={errors.piece?.message}
+                />
+                <InputForm
+                  defaultValue={Recipe.preparationTime}
+                  addditionalCSSDiv="flex flex-col items-center justify-center"
+                  additionalCSSInput="pl-5 md:text-xl"
+                  sizeInput="w-28 md:w-36"
+                  textLabel={"Temps de préparation"}
+                  type={"time"}
+                  placeholder={"4"}
+                  register={register("preparationTime")}
+                  errors={errors.preparationTime?.message}
+                />
+                <InputForm
+                  defaultValue={Recipe.cookingTime}
+                  addditionalCSSDiv="flex flex-col items-center justify-center"
+                  additionalCSSInput="pl-5 md:text-xl "
+                  sizeInput="w-28 md:w-36"
+                  textLabel={"Temps de cuisson"}
+                  type={"time"}
+                  placeholder={""}
+                  register={register("cookingTime")}
+                  errors={errors.cookingTime?.message}
+                />
+                <InputForm
+                  defaultValue={Recipe.standingTime}
+                  addditionalCSSDiv="flex flex-col items-center justify-center"
+                  additionalCSSInput="w-28 md:w-36 pl-5 md:text-xl "
+                  sizeInput="w-28 md:w-36"
+                  textLabel={"Temps de repos"}
+                  type={"time"}
+                  placeholder={""}
+                  register={register("standingTime")}
+                  errors={errors.standingTime?.message}
+                />
+                <ThirdTitle additionalCSS="md:text-[28px]" text="Difficulté" />
+                <InputSelect
+                  defaultValue={String(Recipe.difficulty)}
+                  label={"Sélectionner une difficulté"}
+                  data={[
+                    { content: "Facile", value: "1" },
+                    { content: "Intermédiaire", value: "2" },
+                    { content: "Difficile", value: "3" },
+                  ]}
+                  additionalCSS="bg-[#f8f8f8] rounded-[45px] shadow-[0_4px_4px_rgba(21,21,21,0.25)] w-64"
+                  register={register("difficulty")}
+                  errors={errors.difficulty?.message}
+                />
+                <input type="submit" id="addRecipe" hidden />
+              </form>
+              <ThirdTitle additionalCSS="md:text-[28px] pt-4 pb-2.5" text="Ajouter un ingrédient" />
+              <div className="flex flex-col items-center gap-2.5 ">
+                <form
+                  onSubmit={handleSubmit2(ingredientSubmit)}
+                  className="bg-[#f8f8f8] flex flex-col items-center gap-4 w-64 md:w-72 py-4 rounded-3xl shadow-[0_0_2px_#212121]"
+                >
+                  <div className="flex flex-col items-center justify-center gap-2.5">
+                    <label htmlFor="quantity" className="text-center md:text-xl md:text-center">
+                      Quantité
+                    </label>
+                    <input
+                      id="quantity"
+                      type="number"
+                      step={0.01}
+                      min={0}
+                      placeholder="Entrer une quantité"
+                      className="border-2 border-[#212121] w-44 md:w-64 text-center rounded-3xl"
+                      {...register2("quantity")}
+                      value={inputQuantity}
+                      onChange={(e) => setInputQuantity(Number(e.target.value))}
+                    />
+                    {errors2.quantity && <p className="text-red-600">{errors2.quantity.message}</p>}
+                  </div>
+                  <div>
+                    <ThirdTitle
+                      size="text-base"
+                      text="Unité"
+                      additionalCSS="text-center md:text-[28px] mb-2.5"
+                    />
+                    <InputSelect
+                      label={"Sélectionner une unité"}
+                      data={[
+                        { content: "g", value: "g" },
+                        { content: "ml", value: "ml" },
+                        { content: "Cuillère à soupe", value: "Cuillère à soupe" },
+                        { content: "Cuillère à café", value: "Cuillère à café" },
+                        { content: "Verre", value: "Verre" },
+                        { content: "piece", value: "piece" },
+                      ]}
+                      additionalCSS="bg-[#f8f8f8] rounded-[45px] shadow-[0_4px_4px_rgba(21,21,21,0.25)] w-44 md:w-64"
+                      register={register2("unit")}
+                      errors={errors2.unit?.message}
+                    />
+                  </div>
+                  <div className="flex flex-col items-center justify-center gap-2.5">
+                    <label htmlFor="ingredient" className="text-center md:text-xl md:text-center">
+                      Quantité
+                    </label>
+                    <input
+                      id="ingredient"
+                      type="text"
+                      step={0.01}
+                      min={0}
+                      placeholder="Entrer une Ingrédient"
+                      className="border-2 border-[#212121] w-44 md:w-64 text-center rounded-3xl"
+                      {...register2("ingredient")}
+                      value={inputIngredient}
+                      onChange={(e) => setInputIngredient(e.target.value)}
+                    />
+                    {errors2.ingredient && (
+                      <p className="text-red-600">{errors2.ingredient.message}</p>
+                    )}
+                  </div>
+                  <input
+                    type="submit"
+                    value={"Valider"}
+                    className="bg-[#DE742E] text-white rounded-[20px] w-32 h-7 shadow-[0_1px_1px_#212121]"
+                    onClick={() => {
+                      setInputQuantity(0);
+                      setInputIngredient("");
+                    }}
+                  />
+                </form>
+              </div>
+              {errors.ingredient?.message && (
+                <p className="text-red-600 text-center">{errors.ingredient?.message}</p>
+              )}
+              <ThirdTitle additionalCSS="md:text-[28px] pt-4 pb-2.5" text="Liste ingrédients" />
+              <section className="bg-[#f8f8f8] relative flex flex-col justify-center items-center gap-4 w-64 md:w-72 mx-[auto] py-4 rounded-3xl shadow-[0_0_2px_#212121]">
+                {watch("ingredient") && watch("ingredient").length > 0 ? (
+                  watch("ingredient").map((ingredient, index) => {
+                    return (
+                      <div key={index} className="relative w-64">
+                        <p className="text-center px-10">
+                          {ingredient.quantity} {ingredient.unit} {ingredient.ingredient}
+                        </p>
+                        <IoClose
+                          onClick={() => removeIngredient(index)}
+                          className="absolute cursor-pointer top-0 text-2xl right-4 text-[#DE742E]"
+                        />
+                      </div>
+                    );
+                  })
+                ) : (
+                  <ThirdTitle size="text-base" text="Aucun Ingrédient" />
+                )}
+              </section>
+              <ThirdTitle additionalCSS="md:text-[28px] pt-4 pb-2.5" text="Ajouter une étape" />
+              <div className="w-64 md:w-72 bg-[#f8f8f8] flex flex-col justify-center items-center mx-auto py-4 gap-4 rounded-3xl shadow-[0_0_2px_#212121]">
+                <textarea
+                  placeholder="Entrer votre étape"
+                  value={inputStep?.step}
+                  onChange={(e) => {
+                    setInputStep({ step: e.target.value });
+                  }}
+                  className="w-56 md:w-64 h-14 border-2 text-left align-top border-[#212121] block mx-auto mb-4 px-0.5"
+                />
+                <button
+                  onClick={() => {
+                    addStep();
+                    setInputStep({ step: "" });
+                  }}
+                  className="bg-[#DE742E] text-center text-white rounded-[20px] w-32 h-7 shadow-[0_1px_1px_#212121]"
+                >
+                  Valider
+                </button>
+              </div>
+              {errors.cookingStep?.message && (
+                <p className="text-red-600 text-center">{errors.cookingStep.message}</p>
+              )}
+              <ThirdTitle size="text-base" text="Étape" additionalCSS="mt-4 mb-2.5" />
+              <section className="bg-[#f8f8f8] relative flex flex-col justify-center items-center gap-4 w-64 md:w-72 mx-[auto] py-4 rounded-3xl shadow-[0_0_2px_#212121]">
+                {watch("cookingStep") && watch("cookingStep").length > 0 ? (
+                  watch("cookingStep").map((step, index) => {
+                    return (
+                      <div key={index} className="relative w-64">
+                        <p className="text-center px-10">
+                          <span className="absolute left-4">
+                            {index + 1}
+                            {")"}
+                          </span>
+                          {step.step}
+                        </p>
+                        <IoClose
+                          onClick={() => removeStep(index)}
+                          className="absolute cursor-pointer top-0 text-2xl right-4 text-[#DE742E]"
+                        />
+                      </div>
+                    );
+                  })
+                ) : (
+                  <ThirdTitle size="text-base" text="Aucune étape" />
+                )}
+              </section>
+              <div
+                className={
+                  "w-64 h-9 flex mx-auto mt-4 justify-center items-center bgBlue text-white self-center md:w-72 md:text-xl rounded-3xl drop-shadow-[0_2px_3px_#212121]"
+                }
+              >
+                <label htmlFor="addRecipe">Modifier la recette</label>
+              </div>
+            </div>
+          </div>
+        </Box>
+      </Modal>
+    </div>
+  );
+};
+
+export default RecipeUpdate;

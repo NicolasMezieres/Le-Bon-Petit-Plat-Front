@@ -1,6 +1,9 @@
 "use client";
+import CommentaryItem from "@/components/commentary/CommentaryItem";
 import FoodLoader from "@/components/loader/FoodLoader";
 import CommentaryCreate from "@/components/modal/CommentaryCreate";
+import RecipeDelete from "@/components/modal/RecipeDelete";
+import RecipeUpdate from "@/components/recipe/RecipeUpdate";
 import SecondTitle from "@/components/SecondTitle";
 import ThirdTitle from "@/components/ThirdTitle";
 import { ContextLoading } from "@/context/context";
@@ -9,21 +12,22 @@ import { findRecipeById } from "@/Service/recipe";
 import { imagePath } from "@/utils/const";
 import { commentaryType, lookRecipeType } from "@/utils/type";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React, { useContext, useEffect, useState } from "react";
 import { FaArrowLeft, FaArrowRight, FaHeart, FaRegEdit, FaRegStar, FaStar } from "react-icons/fa";
 import { FaRegHeart } from "react-icons/fa6";
-import { MdDelete, MdOutlineAccessTime } from "react-icons/md";
+import { MdOutlineAccessTime } from "react-icons/md";
 import { PiChefHat, PiKeyReturn } from "react-icons/pi";
 
 const Page = ({ params }: { params: { id: string } }) => {
+  const { push } = useRouter();
   const { setIsLoading, isLoading, tokenInfo, setTokenInfo } = useContext(ContextLoading);
   const [commentaryList, setCommentaryList] = useState<commentaryType[]>([]);
   const [recipeInfo, setRecipeInfo] = useState<lookRecipeType>();
-  const [isFavorite, setIsFavorite] = useState<boolean>();
   const [piece, setPiece] = useState<number>();
+  const [isFavorite, setIsFavorite] = useState<boolean>();
   useEffect(() => {
     findRecipeById(params.id).then((res) => {
-      console.log(res);
       if (res?.status === 200) {
         setRecipeInfo(res.data.data);
         setCommentaryList(res.data.commentary);
@@ -40,9 +44,11 @@ const Page = ({ params }: { params: { id: string } }) => {
             }
           });
         }
+        setIsLoading(false);
+      } else if (res.status === 404) {
+        push("/accueil");
       }
     });
-    setIsLoading(false);
   }, [isLoading]);
   const stars = [];
   for (let i = 0; i < 5; i++) {
@@ -118,19 +124,19 @@ const Page = ({ params }: { params: { id: string } }) => {
             <div className="flex justify-center gap-1" onClick={() => toggleFav()}>
               {isFavorite ? (
                 <>
-                  <FaHeart color="#DE742E" className="w-6 h-6" /> <p>Favori</p>
+                  <FaHeart color="#DE742E" className="w-6 h-6 cursor-pointer" /> <p>Favori</p>
                 </>
               ) : (
                 <>
-                  <FaRegHeart color="#DE742E" className="w-6 h-6" /> <p>Favori</p>
+                  <FaRegHeart color="#DE742E" className="w-6 h-6 cursor-pointer" /> <p>Favori</p>
                 </>
               )}
             </div>
           )}
           {tokenInfo && tokenInfo.sub === recipeInfo.idUser && (
-            <div className="flex justify-center gap-20">
-              <FaRegEdit color="#DE742E" className="w-10 h-10" />
-              <MdDelete color="#DE742E" className="w-10 h-10" />
+            <div className="flex relative justify-center gap-20">
+              <RecipeUpdate Recipe={recipeInfo} />
+              <RecipeDelete Recipe={recipeInfo} />
             </div>
           )}
           <ThirdTitle
@@ -205,24 +211,8 @@ const Page = ({ params }: { params: { id: string } }) => {
           {commentaryList && (
             <section className="w-full md:w-80 self-center">
               {commentaryList.length > 0 &&
-                commentaryList.map((Element, index) => {
-                  const stars = [];
-                  for (let i = 0; i < 5; i++) {
-                    if (i < Element.note) {
-                      stars.push(<FaStar color="#DE742E" className="w-6 h-6" key={i} />);
-                    } else {
-                      stars.push(<FaRegStar color="#DE742E" className="w-6 h-6" key={i} />);
-                    }
-                  }
-                  const date = new Date(Element.createdAt);
-                  return (
-                    <div className="shadow-[0_0_2px_#212121] p-4 rounded-3xl" key={index}>
-                      <p className="text-[#DE742E]">{Element.username}</p>
-                      <div className="flex">{stars}</div>
-                      <p>{Element.text}</p>
-                      <p className="text-[#888]">{date.toLocaleDateString("fr")}</p>
-                    </div>
-                  );
+                commentaryList.map((commentary, index) => {
+                  return <CommentaryItem key={index} commentary={commentary} />;
                 })}
             </section>
           )}

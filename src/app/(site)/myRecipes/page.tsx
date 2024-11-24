@@ -23,14 +23,12 @@ const Page = () => {
   const [starSelected, setStarSelected] = useState<React.JSX.Element[]>();
   const [valueCategory, setValueCategory] = useState<string>();
   useEffect(() => {
-    console.log(valueCategory);
     if (!search && !valueCategory && selectNote === 0) {
       myRecipes(page).then((res) => {
         if (res.status === 200) {
           setListRecipes(res.data.data);
           setIsNextPage(res.data.isNextPage);
         } else if (res.status === 401) {
-          console.log(res);
           window.localStorage.removeItem("token");
           push("/signin");
         }

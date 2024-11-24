@@ -54,7 +54,7 @@ export async function getCommentariesByRecipe(id: string) {
 }
 
 export async function updateCommentary(data: commentaryFormType, id: string) {
-  const url = `${process.env.NEXT_PUBLIC_API_URL}${commentary}/${id}`;
+  const url = `${process.env.NEXT_PUBLIC_API_URL}${commentary}${id}`;
   axiosConfigWithToken.headers.Authorization = `Bearer ${window.localStorage.getItem("token")}`;
   return axios
     .patch(url, data, axiosConfigWithToken)
@@ -72,7 +72,7 @@ export async function updateCommentary(data: commentaryFormType, id: string) {
 }
 
 export async function deleteCommentary(id: string) {
-  const url = `${process.env.NEXT_PUBLIC_API_URL}${commentary}/${id}`;
+  const url = `${process.env.NEXT_PUBLIC_API_URL}${commentary}${id}`;
   axiosConfigWithToken.headers.Authorization = `Bearer ${window.localStorage.getItem("token")}`;
   return axios
     .delete(url, axiosConfigWithToken)

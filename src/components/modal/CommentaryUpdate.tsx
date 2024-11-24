@@ -2,22 +2,25 @@ import { ContextLoading } from "@/context/context";
 import { Box, Modal } from "@mui/material";
 import { useRouter } from "next/navigation";
 import React, { useContext, useState } from "react";
-import { FaRegStar } from "react-icons/fa";
+import { FaRegEdit } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
 import SearchNotation from "../SearchNotation";
-import { createCommentary } from "@/Service/commentary";
+import { createCommentary, updateCommentary } from "@/Service/commentary";
+import { commentaryType } from "@/utils/type";
+import { toast } from "react-toastify";
 const style = {
   position: "absolute" as "fixed",
 };
-const CommentaryCreate = ({ id }: { id: string }) => {
+const CommentaryUpdate = ({ commentary }: { commentary: commentaryType }) => {
   const { tokenInfo, setIsLoading } = useContext(ContextLoading);
   const { push } = useRouter();
   const [open, setOpen] = useState(false);
   const [selectNote, setSelectNote] = useState<number>(0);
   const [starSelected, setStarSelected] = useState<React.JSX.Element[]>();
-  const [commentaryText, setCommentaryText] = useState<string>();
+  const [commentaryText, setCommentaryText] = useState<string>(commentary.text);
   const [errorNote, setErrorNote] = useState<string>();
   const handleOpen = () => {
+    setSelectNote(commentary.note);
     if (tokenInfo) {
       setOpen(true);
     } else {
@@ -27,13 +30,14 @@ const CommentaryCreate = ({ id }: { id: string }) => {
   function handleClose() {
     setOpen(false);
   }
-  function addCommentary() {
+  function patchCommentary() {
     if (!selectNote || selectNote <= 0 || selectNote > 5) {
       setErrorNote("Veuillez mettre une note entre 1 et 5");
     } else {
-      const data = { idRecipe: id, note: selectNote, text: commentaryText };
-      createCommentary(data).then((res) => {
-        if (res?.status === 201) {
+      const data = { idRecipe: commentary.idRecipe, note: selectNote, text: commentaryText };
+      updateCommentary(data, commentary._id).then((res) => {
+        if (res?.status === 200) {
+          toast.success("Modification avec succès");
           setIsLoading(true);
         }
         handleClose();
@@ -42,14 +46,11 @@ const CommentaryCreate = ({ id }: { id: string }) => {
   }
   return (
     <div>
-      <div className="flex justify-center cursor-pointer" onClick={() => handleOpen()}>
-        <p className="pr-5">Donnez votre avis</p>
-        <FaRegStar color="#DE742E" className="w-6 h-6" />
-        <FaRegStar color="#DE742E" className="w-6 h-6" />
-        <FaRegStar color="#DE742E" className="w-6 h-6" />
-        <FaRegStar color="#DE742E" className="w-6 h-6" />
-        <FaRegStar color="#DE742E" className="w-6 h-6" />
-      </div>
+      <FaRegEdit
+        color="#DE742E"
+        className="w-6 h-6 absolute top-4 right-12 orange cursor-pointer"
+        onClick={handleOpen}
+      />
       <Modal
         open={open}
         onClose={handleClose}
@@ -83,6 +84,7 @@ const CommentaryCreate = ({ id }: { id: string }) => {
               <textarea
                 className="w-full rounded-3xl px-4 py-4"
                 placeholder="Entrer votre message ici"
+                value={commentaryText}
                 onChange={(e) => {
                   setCommentaryText(e.target.value);
                 }}
@@ -90,7 +92,7 @@ const CommentaryCreate = ({ id }: { id: string }) => {
             </div>
             <input
               onClick={() => {
-                addCommentary();
+                patchCommentary();
               }}
               type="submit"
               value="Valider"
@@ -103,4 +105,4 @@ const CommentaryCreate = ({ id }: { id: string }) => {
   );
 };
 
-export default CommentaryCreate;
+export default CommentaryUpdate;

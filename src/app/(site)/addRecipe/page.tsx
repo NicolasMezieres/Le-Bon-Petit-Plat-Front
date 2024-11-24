@@ -87,7 +87,6 @@ const Page = () => {
     } else {
       setValue("ingredient", [data]);
     }
-    //ici
   };
   function removeIngredient(index: number) {
     const data = watch("ingredient");

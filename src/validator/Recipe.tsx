@@ -30,7 +30,8 @@ export const schemaRecipe = yup.object({
         ingredient: yup.string().required("Ce champ est requis"),
       })
     )
-    .required("Minimum 1 ingrédient"),
+    .required("Minimum 1 ingrédient")
+    .min(1, "Minimum 1 ingrédient"),
   cookingStep: yup
     .array()
     .of(
@@ -42,5 +43,6 @@ export const schemaRecipe = yup.object({
           .required("Ce champ est requis"),
       })
     )
-    .required("Minimum 1 étape"),
+    .required("Minimum 1 étape")
+    .min(1, "Minimum 1 étape"),
 });

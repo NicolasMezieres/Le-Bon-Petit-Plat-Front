@@ -12,14 +12,46 @@ const Category = ({
   field,
   setValueCategory,
   valueCategory,
+  defaultValue,
 }: {
   selectCategory: number | undefined;
   setSelectCategory: React.Dispatch<React.SetStateAction<number | undefined>>;
   setValue?: UseFormSetValue<any>;
   field?: string;
+  defaultValue?: string;
   valueCategory?: string | undefined;
   setValueCategory?: React.Dispatch<React.SetStateAction<string | undefined>>;
 }) => {
+  function valueDefault(defaultValue: string) {
+    let idCategory: number | undefined;
+    switch (defaultValue) {
+      case "Petit-déj":
+        idCategory = 1;
+        break;
+      case "Apéritif":
+        idCategory = 2;
+        break;
+      case "Boisson":
+        idCategory = 3;
+        break;
+      case "Entrée":
+        idCategory = 4;
+        break;
+      case "Plat":
+        idCategory = 5;
+        break;
+      case "Dessert":
+        idCategory = 6;
+        break;
+      default:
+        idCategory = undefined;
+    }
+    return idCategory;
+  }
+  if (defaultValue) {
+    const idCategory = valueDefault(defaultValue);
+    setSelectCategory(idCategory);
+  }
   function select(idCategory: number, value: string) {
     if (valueCategory === value) {
       setSelectCategory(undefined);

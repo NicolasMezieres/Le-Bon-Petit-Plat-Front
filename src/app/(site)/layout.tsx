@@ -29,9 +29,7 @@ export default function RootLayout({
       try {
         const jwt: tokenType = jwtDecode(token);
         setTokenInfo(jwt);
-      } catch (error) {
-        console.log(error);
-      }
+      } catch (error) {}
     }
     setIsLoad(false);
   }, []);
