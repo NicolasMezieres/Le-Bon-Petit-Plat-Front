@@ -1,5 +1,6 @@
 "use client";
 import Category from "@/components/category/Category";
+import InputForm from "@/components/form/InputForm";
 import ListRecipes from "@/components/recipe/ListRecipes";
 import RecipeItem from "@/components/recipe/RecipeItem";
 import SearchBar from "@/components/SearchBar";
@@ -61,6 +62,7 @@ const Page = () => {
   }, [research, page, isLoading, valueCategory, selectNote]);
   return (
     <main className="grow py-4 flex flex-col gap-4 md:px-20">
+      <InputForm placeholder="test" textLabel="test" type="text" />
       <SearchBar setPage={setPage} setSearch={setResearch} search={research} />
       <SearchNotation
         selectNote={selectNote}

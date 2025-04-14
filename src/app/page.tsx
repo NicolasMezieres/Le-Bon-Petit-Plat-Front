@@ -1,4 +1,5 @@
 import Footer from "@/components/footer/Footer";
+import InputForm from "@/components/form/InputForm";
 import HeaderAuth from "@/components/header/HeaderAuth";
 import MainTitle from "@/components/MainTitle";
 import Image from "next/image";
@@ -9,6 +10,7 @@ export default function Home() {
       <div className="bgImageDescription before:block">
         <HeaderAuth />
         <main className="grow pb-5">
+          <InputForm type="text" placeholder="test" textLabel="test" />
           <div className="relative pt-4 md:pt-20 z-10 text-center h-full md:text-xl lg:text-2xl flex gap-y-20 flex-col px-4 md:px-8 xl:px-20">
             <MainTitle text="Bienvenue sur le bon petit plat" />
             <section className="flex items-center">
