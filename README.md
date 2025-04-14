@@ -1,36 +1,79 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Portfolio
 
-## Getting Started
+## About
 
-First, run the development server:
+This project is a recipe website, you can create a recipe, comment, rate, search by ingredient or name. You need to have an  account valid if you want create anything.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Table of contents
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- [About](#about)
+- [Technologies](#technologies)
+- [Installation](#installation)
+- [Getting start](#getting-start)
+- [Screenshots](#screenshots)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Technologies 
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- NextJS 14.2.15
+- React 18
+- TailwindCSS 3.4.1
+- Typescript
 
-## Learn More
+[(return summary)](#about)
 
-To learn more about Next.js, take a look at the following resources:
+## Installation
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Clone the repository
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```git clone https://github.com/NicolasMezieres/Le-Bon-Petit-Plat-Front.git```
 
-## Deploy on Vercel
+2. Install NPM package
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+``` npm install ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+[(return summary)](#about)
+
+## Getting start
+
+For launch the project
+
+```npm run dev ```
+
+[(return summary)](#about)
+
+## Back-end
+
+You can find back-end here :
+
+[Github Back](https://github.com/NicolasMezieres/Le-Bon-Petit-Plat-Back)
+
+## Screenshots
+
+### Presentation
+<img  alt='Presentation page' src='https://github.com/NicolasMezieres/Le-Bon-Petit-Plat-Front/blob/main/public/readme/presentation.png' width="300px"/>
+
+### Signin
+<img  alt='Signin page' src='https://github.com/NicolasMezieres/Le-Bon-Petit-Plat-Front/blob/main/public/readme/signin.png' width="200px"/>
+
+### Signup 
+<img  alt='Signup page' src='https://github.com/NicolasMezieres/Le-Bon-Petit-Plat-Front/blob/main/public/readme/signup.png' width="200px"/>
+
+### Validate your account
+<img  alt='Validate your account' src='https://github.com/NicolasMezieres/Le-Bon-Petit-Plat-Front/blob/main/public/readme/valideAccount.png' width="600px"/>
+
+### Home Mobile
+<img  alt='Home mobile page' src='https://github.com/NicolasMezieres/Le-Bon-Petit-Plat-Front/blob/main/public/readme/home.png' width="200px"/>
+
+### Home desktop
+<img  alt='Home desktop page' src='https://github.com/NicolasMezieres/Le-Bon-Petit-Plat-Front/blob/main/public/readme/homeDesktop.png' width="600px"/>
+
+### Create a recipe
+<img  alt='Create a recipe' src='https://github.com/NicolasMezieres/Le-Bon-Petit-Plat-Front/blob/main/public/readme/createRecipe.png' width="400px"/>
+
+### Commentary 
+<img  alt='Commentary' src='https://github.com/NicolasMezieres/Le-Bon-Petit-Plat-Front/blob/main/public/readme/commentary.png' width="400px"/>
+
+### Create a commentary
+<img  alt='Create a commentary' src='https://github.com/NicolasMezieres/Le-Bon-Petit-Plat-Front/blob/main/public/readme/createCommentary.png' width="400px"/>
+
+[(return summary)](#about)
